@@ -1,0 +1,62 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFrameworks>net46;net47;netcoreapp3.0</TargetFrameworks>
+    <AssemblyName>Orc.FeatureToggles</AssemblyName>
+    <RootNamespace>Orc.FeatureToggles</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <PackageId>Orc.FeatureToggles</PackageId>
+    <PackageVersion>1.0.0-alpha0001</PackageVersion>
+    <Description>FeatureToggles library.</Description>
+    <PackageTags>orc;feature;toggle</PackageTags>
+    <UseWpf>true</UseWpf>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- SonarQube requires a project guid -->
+    <ProjectGuid>82E9CEF6-4793-49B0-94FE-BF3BC243741C</ProjectGuid>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Catel.Analyzers" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="Catel.Core" Version="5.11.2" />
+    <PackageReference Include="Catel.Fody" Version="4.2.0" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="6.0.0" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MethodTimer.Fody" Version="3.1.0" PrivateAssets="all" />
+    <PackageReference Include="ModuleInit.Fody" Version="2.1.0" PrivateAssets="all" />
+    <PackageReference Include="Obsolete.Fody" Version="5.1.0" PrivateAssets="all" />
+    <PackageReference Include="Orc.FileSystem" Version="3.1.0" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="WpfAnalyzers" Version="2.2.0.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Models\Interfaces\" />
+    <Folder Include="Services\Extensions\" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\..\Directory.build.shared.explicit.props" Condition="Exists('$(MSBuildProjectDirectory)\..\Directory.build.shared.explicit.props')" />
+  <Import Project="$(MSBuildProjectDirectory)\..\Directory.build.shared.mat.props" Condition="Exists('$(MSBuildProjectDirectory)\..\Directory.build.shared.mat.props')" />
+</Project>
