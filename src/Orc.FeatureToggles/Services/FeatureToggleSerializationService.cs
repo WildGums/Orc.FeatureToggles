@@ -1,6 +1,7 @@
 ﻿namespace Orc.FeatureToggles
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
     using Catel;
@@ -28,54 +29,44 @@
             _xmlSerializer = xmlSerializer;
         }
 
-        //public async virtual Task<FilterSchemes> LoadFiltersAsync(string fileName)
-        //{
-        //    Argument.IsNotNullOrWhitespace(() => fileName);
+        protected virtual string GetFileName()
+        {
+            return Catel.IO.Path.GetApplicationDataDirectory();
+        }
 
-        //    Log.Info($"Loading filter schemes from '{fileName}'");
+        public async Task<List<FeatureToggle>> LoadAsync()
+        {
+            var toggles = new List<FeatureToggle>();
 
-        //    var filterSchemes = new FilterSchemes();
+            var fileName = GetFileName();
 
-        //    try
-        //    {
-        //        if (_fileService.Exists(fileName))
-        //        {
-        //            using (var stream = _fileService.OpenRead(fileName))
-        //            {
-        //                _xmlSerializer.Deserialize(filterSchemes, stream, null);
-        //            }
-        //        }
+            Log.Debug($"Loading feature toggles from '{fileName}'");
 
-        //        Log.Debug("Loaded filter schemes from '{0}'", fileName);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.Error(ex, "Failed to load filter schemes");
-        //    }
+            if (_fileService.Exists(fileName))
+            {
+                using (var stream = _fileService.OpenRead(fileName))
+                {
+                    var deserializedToggles = (List<FeatureToggle>)_xmlSerializer.Deserialize(typeof(List<FeatureToggle>), stream);
+                    if (deserializedToggles != null)
+                    {
+                        toggles.AddRange(deserializedToggles);
+                    }
+                }
+            }
 
-        //    return filterSchemes;
-        //}
+            return toggles;
+        }
 
-        //public async virtual Task SaveFiltersAsync(string fileName, FilterSchemes filterSchemes)
-        //{
-        //    Argument.IsNotNullOrWhitespace(() => fileName);
-        //    Argument.IsNotNull(() => filterSchemes);
+        public async Task SaveAsync(List<FeatureToggle> featureToggles)
+        {
+            var fileName = GetFileName();
 
-        //    Log.Info($"Saving filter schemes to '{fileName}'");
+            Log.Debug($"Saving feature toggles to '{fileName}'");
 
-        //    try
-        //    {
-        //        using (var stream = _fileService.OpenWrite(fileName))
-        //        {
-        //            _xmlSerializer.Serialize(filterSchemes, stream, null);
-        //        }
-
-        //        Log.Debug("Saved filter schemes to '{0}'", fileName);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Log.Error(ex, "Failed to save filter schemes");
-        //    }
-        //}
+            using (var stream = _fileService.Create(fileName))
+            {
+                _xmlSerializer.Serialize(featureToggles, stream);
+            }
+        }
     }
 }
