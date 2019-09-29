@@ -5,7 +5,7 @@
                   xmlns:views="clr-namespace:Orc.FeatureToggles.Views"
                   Width="700" SizeToContent="Height"
                   ResizeMode="CanResizeWithGrip"
-                  MinHeight="600" MinWidth="500">
+                  MinHeight="600" MinWidth="700">
 
     <views:ManageFeatureTogglesView />
 

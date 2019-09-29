@@ -157,9 +157,11 @@
             toggle.Toggled -= OnFeatureToggleToggled;
         }
 
-        private void OnFeatureToggleToggled(object sender, ToggledEventArgs e)
+        private async void OnFeatureToggleToggled(object sender, ToggledEventArgs e)
         {
             Log.Info($"Feature toggle '{e.Toggle}' was toggled from '{e.OldValue}' => '{e.NewValue}'");
+
+            await SaveAsync();
 
             Toggled?.Invoke(this, e);
         }
