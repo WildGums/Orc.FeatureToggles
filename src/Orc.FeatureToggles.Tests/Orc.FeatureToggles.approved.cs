@@ -20,6 +20,7 @@ namespace Orc.FeatureToggles
     }
     public class static FeatureToggleExtensions
     {
+        public static void Reset(this Orc.FeatureToggles.FeatureToggle toggle) { }
         public static void Toggle(this Orc.FeatureToggles.FeatureToggle toggle) { }
     }
     public class FeatureToggleInitializationService : Orc.FeatureToggles.IFeatureToggleInitializationService
