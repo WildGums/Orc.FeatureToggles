@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>Default value</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>Manage feature toggles</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>Show toggles containing</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
 </root>

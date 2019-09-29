@@ -1,5 +1,7 @@
 ﻿using Catel.IoC;
 using Catel.Services;
+using Orc.FeatureToggles.ViewModels;
+using Orc.FeatureToggles.Views;
 
 /// <summary>
 /// Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.
@@ -17,9 +19,9 @@ public static class ModuleInitializer
         var languageService = serviceLocator.ResolveType<ILanguageService>();
         languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.FeatureToggles.Xaml", "Orc.FeatureToggles.Properties", "Resources"));
 
-        // Register some custom windows (since we combine windows and views)
-        //var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
-        //uiVisualizerService.Register<EditFilterViewModel, EditFilterWindow>();
+        // Custom views (sharing same view model)
+        var uiVisualizerService = serviceLocator.ResolveType<IUIVisualizerService>();
+        uiVisualizerService.Register<ManageFeatureTogglesViewModel, ManageFeatureTogglesWindow>(false);
     }
     #endregion
 }

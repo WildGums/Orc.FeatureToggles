@@ -17,11 +17,11 @@ using System.Windows.Markup;
 [assembly: AssemblyDescription("Orc.FeatureToggles.Xaml library")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
-//[assembly: XmlnsPrefix("http://schemas.wildgums.com/orc/featuretoggles", "orcfeaturetoggles")]
-//[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles")]
+[assembly: XmlnsPrefix("http://schemas.wildgums.com/orc/featuretoggles", "orcfeaturetoggles")]
+[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles")]
 //[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles.Behaviors")]
 //[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles.Converters")]
-//[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles.Views")]
+[assembly: XmlnsDefinition("http://schemas.wildgums.com/orc/featuretoggles", "Orc.FeatureToggles.Views")]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located

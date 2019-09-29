@@ -8,9 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Orc.FilterBuilder.Properties {
+namespace Orc.FeatureToggles.Properties {
     using System;
-    using Catel.Reflection;
+    
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -19,7 +19,7 @@ namespace Orc.FilterBuilder.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace Orc.FilterBuilder.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Orc.FilterBuilder.Properties.Resources", typeof(Resources).GetAssemblyEx());
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Orc.FeatureToggles.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,69 @@ namespace Orc.FilterBuilder.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default value.
+        /// </summary>
+        internal static string FeatureToggles_DefaultValue {
+            get {
+                return ResourceManager.GetString("FeatureToggles_DefaultValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string FeatureToggles_Description {
+            get {
+                return ResourceManager.GetString("FeatureToggles_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage feature toggles.
+        /// </summary>
+        internal static string FeatureToggles_ManageFeatureToggles {
+            get {
+                return ResourceManager.GetString("FeatureToggles_ManageFeatureToggles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string FeatureToggles_Name {
+            get {
+                return ResourceManager.GetString("FeatureToggles_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show toggles containing.
+        /// </summary>
+        internal static string FeatureToggles_ShowTogglesContaining {
+            get {
+                return ResourceManager.GetString("FeatureToggles_ShowTogglesContaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle.
+        /// </summary>
+        internal static string FeatureToggles_Toggle {
+            get {
+                return ResourceManager.GetString("FeatureToggles_Toggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        internal static string FeatureToggles_Value {
+            get {
+                return ResourceManager.GetString("FeatureToggles_Value", resourceCulture);
             }
         }
     }
