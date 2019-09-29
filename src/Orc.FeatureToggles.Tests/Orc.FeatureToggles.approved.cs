@@ -11,10 +11,12 @@ namespace Orc.FeatureToggles
         public FeatureToggle() { }
         public bool DefaultValue { get; set; }
         public string Description { get; set; }
+        public bool EffectiveValue { get; }
         public bool IsHidden { get; set; }
         public string Name { get; set; }
         public System.Nullable<bool> Value { get; set; }
         public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
+        protected override void OnPropertyChanged(Catel.Data.AdvancedPropertyChangedEventArgs e) { }
         protected void RaiseToggled(System.Nullable<bool> oldValue, System.Nullable<bool> newValue) { }
         public override string ToString() { }
     }

@@ -33,6 +33,11 @@
             }
         }
 
+        public bool EffectiveValue
+        {
+            get { return Value ?? DefaultValue; }
+        }
+
         public bool DefaultValue { get; set; }
 
         public event EventHandler<ToggledEventArgs> Toggled;

@@ -123,6 +123,9 @@
   <data name="FeatureToggles_Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>Effective value (value or default value)</value>
+  </data>
   <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
     <value>Manage feature toggles</value>
   </data>
