@@ -19,7 +19,7 @@
                 return fallbackValue;
             }
 
-            return toggle.Value ?? toggle.DefaultValue;
+            return toggle.EffectiveValue;
         }
 
         public static bool RemoveToggle(this IFeatureToggleService service, string name)
