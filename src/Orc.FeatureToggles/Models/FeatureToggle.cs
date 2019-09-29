@@ -28,6 +28,7 @@
                 {
                     _value = value;
                     RaiseToggled(currentValue, value);
+                    RaisePropertyChanged(nameof(Value));
                 }
             }
         }
