@@ -31,7 +31,7 @@
 
         protected virtual string GetFileName()
         {
-            return Catel.IO.Path.GetApplicationDataDirectory();
+            return Path.Combine(Catel.IO.Path.GetApplicationDataDirectory(), "FeatureToggles.xml");
         }
 
         public async Task<List<FeatureToggleValue>> LoadAsync()
