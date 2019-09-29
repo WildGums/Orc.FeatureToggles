@@ -47,7 +47,7 @@
         {
             var text = "Super cool feature NOT enabled";
 
-            if (_featureToggleService.GetValue(SuperCoolFeatureToggle.Name) ?? false)
+            if (_featureToggleService.GetValue(SuperCoolFeatureToggle.Name, false))
             {
                 text = "Super cool feature ENABLED";
             }

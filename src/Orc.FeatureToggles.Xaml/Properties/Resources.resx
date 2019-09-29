@@ -129,6 +129,9 @@
   <data name="FeatureToggles_Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
     <value>Show toggles containing</value>
   </data>

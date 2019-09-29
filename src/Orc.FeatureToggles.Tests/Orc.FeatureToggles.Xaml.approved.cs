@@ -16,6 +16,7 @@ namespace Orc.FeatureToggles.ViewModels
         public static readonly Catel.Data.PropertyData ToggleFilterProperty;
         public static readonly Catel.Data.PropertyData TogglesProperty;
         public ManageFeatureTogglesViewModel(Orc.FeatureToggles.IFeatureToggleService featureToggleService, Catel.MVVM.ICommandManager commandManager, Catel.Services.ILanguageService languageService, Catel.Services.IMessageService messageService) { }
+        public Catel.MVVM.Command Reset { get; }
         public Orc.FeatureToggles.FeatureToggle SelectedToggle { get; set; }
         public override string Title { get; }
         public Catel.MVVM.Command Toggle { get; }

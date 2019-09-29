@@ -54,10 +54,18 @@
             <Label Grid.Row="0" Grid.Column="0" 
                    Content="{Binding SelectedToggle.Name}" />
 
-            <Button Grid.Row="0" Grid.Column="1"
-                    Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
-                    Command="{Binding Toggle}" />
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="{catel:LanguageBinding FeatureToggles_Reset}" 
+                        Command="{Binding Reset}"
+                        MinWidth="100" />
 
+                <Button Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
+                        Command="{Binding Toggle}" 
+                        MinWidth="100" />
+            </StackPanel>
+            
             <Label Grid.Row="1" Grid.ColumnSpan="2">
                 <TextBlock TextWrapping="Wrap" Text="{Binding SelectedToggle.Description}" />
             </Label>

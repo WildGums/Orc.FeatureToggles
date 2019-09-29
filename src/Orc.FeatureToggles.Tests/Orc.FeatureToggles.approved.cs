@@ -90,7 +90,7 @@ namespace Orc.FeatureToggles
     }
     public class static IFeatureToggleServiceExtensions
     {
-        public static System.Nullable<bool> GetValue(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
+        public static bool GetValue(this Orc.FeatureToggles.IFeatureToggleService service, string name, bool fallbackValue) { }
         public static System.Threading.Tasks.Task InitializeAndLoadAsync(this Orc.FeatureToggles.IFeatureToggleService service) { }
         public static bool RemoveToggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
         public static bool Toggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }

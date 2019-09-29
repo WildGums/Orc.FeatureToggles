@@ -29,6 +29,7 @@
             Toggles = new FastObservableCollection<FeatureToggle>();
             ToggleFilter = string.Empty;
 
+            Reset = new Command(OnResetExecute, OnResetCanExecute);
             Toggle = new Command(OnToggleExecute, OnToggleCanExecute);
         }
 
@@ -46,6 +47,18 @@
         #endregion
 
         #region Commands
+        public Command Reset { get; private set; }
+
+        private bool OnResetCanExecute()
+        {
+            return SelectedToggle != null;
+        }
+
+        private void OnResetExecute()
+        {
+            SelectedToggle.Reset();
+        }
+
         public Command Toggle { get; private set; }
 
         private bool OnToggleCanExecute()
@@ -63,7 +76,6 @@
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
-
         }
 
         protected override async Task CloseAsync()
@@ -72,6 +84,7 @@
 
             await base.CloseAsync();
         }
+
 
         private void UpdateToggles()
         {

@@ -9,17 +9,17 @@
 
     public static class IFeatureToggleServiceExtensions
     {
-        public static bool? GetValue(this IFeatureToggleService service, string name)
+        public static bool GetValue(this IFeatureToggleService service, string name, bool fallbackValue)
         {
             Argument.IsNotNull(() => service);
 
             var toggle = service.GetToggle(name);
             if (toggle is null)
             {
-                return null;
+                return fallbackValue;
             }
 
-            return toggle.Value;
+            return toggle.Value ?? toggle.DefaultValue;
         }
 
         public static bool RemoveToggle(this IFeatureToggleService service, string name)

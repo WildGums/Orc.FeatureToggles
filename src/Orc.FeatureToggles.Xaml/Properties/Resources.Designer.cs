@@ -97,6 +97,15 @@ namespace Orc.FeatureToggles.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string FeatureToggles_Reset {
+            get {
+                return ResourceManager.GetString("FeatureToggles_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show toggles containing.
         /// </summary>
         internal static string FeatureToggles_ShowTogglesContaining {
