@@ -17,5 +17,10 @@
         }
 
         public FeatureToggle Toggle { get; }
+
+        public bool IsToggle(string name)
+        {
+            return Toggle.Name.EqualsIgnoreCase(name);
+        }
     }
 }

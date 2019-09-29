@@ -7,21 +7,17 @@
     using System.Threading.Tasks;
     using Catel;
 
-    public class ToggledEventArgs : EventArgs
+    public class ToggledEventArgs : ToggleEventArgs
     {
-        public ToggledEventArgs(FeatureToggle toggle, bool oldValue, bool newValue)
+        public ToggledEventArgs(FeatureToggle toggle, bool? oldValue, bool? newValue)
+            : base(toggle)
         {
-            Argument.IsNotNull(() => toggle);
-
-            Toggle = toggle;
             OldValue = oldValue;
             NewValue = newValue;
         }
 
-        public FeatureToggle Toggle { get; }
+        public bool? OldValue { get; }
 
-        public bool OldValue { get; }
-
-        public bool NewValue { get; }
+        public bool? NewValue { get; }
     }
 }

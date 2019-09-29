@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
@@ -68,7 +69,11 @@
 
             using (var stream = _fileService.Create(fileName))
             {
-                _xmlSerializer.Serialize(toggleValues, stream);
+                var togglesValuesToSerialize = (from toggleValue in toggleValues
+                                                where toggleValue.Value.HasValue
+                                                select toggleValue).ToList();
+
+                _xmlSerializer.Serialize(togglesValuesToSerialize, stream);
             }
         }
     }

@@ -17,9 +17,9 @@
 
         public bool IsHidden { get; set; }
 
-        public bool Value
+        public bool? Value
         {
-            get => _value ?? DefaultValue;
+            get => _value;
             set
             {
                 // Note: this way we keep the value null in case it matches the default
@@ -37,7 +37,7 @@
 
         public event EventHandler<ToggledEventArgs> Toggled;
 
-        protected void RaiseToggled(bool oldValue, bool newValue)
+        protected void RaiseToggled(bool? oldValue, bool? newValue)
         {
             Toggled?.Invoke(this, new ToggledEventArgs(this, oldValue, newValue));
         }

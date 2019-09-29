@@ -13,10 +13,9 @@ namespace Orc.FeatureToggles
         public string Description { get; set; }
         public bool IsHidden { get; set; }
         public string Name { get; set; }
-        public bool Value { get; set; }
+        public System.Nullable<bool> Value { get; set; }
         public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
-        protected override void OnPropertyChanged(Catel.Data.AdvancedPropertyChangedEventArgs e) { }
-        protected void RaiseToggled(bool oldValue, bool newValue) { }
+        protected void RaiseToggled(System.Nullable<bool> oldValue, System.Nullable<bool> newValue) { }
         public override string ToString() { }
     }
     public class static FeatureToggleExtensions
@@ -58,7 +57,7 @@ namespace Orc.FeatureToggles
         public FeatureToggleValue() { }
         public FeatureToggleValue(Orc.FeatureToggles.FeatureToggle toggle) { }
         public string Name { get; set; }
-        public bool Value { get; set; }
+        public System.Nullable<bool> Value { get; set; }
     }
     public interface IFeatureToggleInitializationService
     {
@@ -95,16 +94,16 @@ namespace Orc.FeatureToggles
         public static bool RemoveToggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
         public static bool Toggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
     }
-    public class ToggledEventArgs : System.EventArgs
+    public class ToggledEventArgs : Orc.FeatureToggles.ToggleEventArgs
     {
-        public ToggledEventArgs(Orc.FeatureToggles.FeatureToggle toggle, bool oldValue, bool newValue) { }
-        public bool NewValue { get; }
-        public bool OldValue { get; }
-        public Orc.FeatureToggles.FeatureToggle Toggle { get; }
+        public ToggledEventArgs(Orc.FeatureToggles.FeatureToggle toggle, System.Nullable<bool> oldValue, System.Nullable<bool> newValue) { }
+        public System.Nullable<bool> NewValue { get; }
+        public System.Nullable<bool> OldValue { get; }
     }
     public class ToggleEventArgs : System.EventArgs
     {
         public ToggleEventArgs(Orc.FeatureToggles.FeatureToggle toggle) { }
         public Orc.FeatureToggles.FeatureToggle Toggle { get; }
+        public bool IsToggle(string name) { }
     }
 }

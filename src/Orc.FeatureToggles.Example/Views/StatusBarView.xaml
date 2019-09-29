@@ -3,6 +3,6 @@
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 				   xmlns:catel="http://schemas.catelproject.com">
     <Grid>
-        
+        <TextBlock Text="{Binding Status}" />
     </Grid>
 </catel:UserControl>
