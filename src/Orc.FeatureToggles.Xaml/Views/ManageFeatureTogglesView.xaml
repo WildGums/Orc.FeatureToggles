@@ -33,7 +33,8 @@
                     <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_Name}" 
                                     DisplayMemberBinding="{Binding Name}" Width="300" />
                     <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_EffectiveValue}" 
-                                    DisplayMemberBinding="{Binding EffectiveValue}" Width="175" />
+                                    ToolTipService.ToolTip="{catel:LanguageBinding FeatureToggles_EffectiveValue_ToolTip}"
+                                    DisplayMemberBinding="{Binding EffectiveValue}" Width="100" />
                     <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_Value}" 
                                     DisplayMemberBinding="{Binding Value}" Width="100" />
                     <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_DefaultValue}" 

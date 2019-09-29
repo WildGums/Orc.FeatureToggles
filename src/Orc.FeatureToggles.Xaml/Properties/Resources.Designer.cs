@@ -79,11 +79,20 @@ namespace Orc.FeatureToggles.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Effective value (value or default value).
+        ///   Looks up a localized string similar to Effective value.
         /// </summary>
         internal static string FeatureToggles_EffectiveValue {
             get {
                 return ResourceManager.GetString("FeatureToggles_EffectiveValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The effective value is either the current value. If the value is not set, the effective value will be the default value..
+        /// </summary>
+        internal static string FeatureToggles_EffectiveValue_ToolTip {
+            get {
+                return ResourceManager.GetString("FeatureToggles_EffectiveValue_ToolTip", resourceCulture);
             }
         }
         

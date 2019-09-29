@@ -124,7 +124,10 @@
     <value>Description</value>
   </data>
   <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
-    <value>Effective value (value or default value)</value>
+    <value>Effective value</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>The effective value is either the current value. If the value is not set, the effective value will be the default value.</value>
   </data>
   <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
     <value>Manage feature toggles</value>
