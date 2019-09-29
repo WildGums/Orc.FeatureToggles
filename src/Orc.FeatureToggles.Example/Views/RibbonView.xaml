@@ -9,12 +9,10 @@
         <fluent:Ribbon.Tabs>
             <fluent:RibbonTabItem Header="Feature toggles">
                 <fluent:RibbonGroupBox Header="Feature toggles">
-                    
-                    <!--<fluent:SplitButton Header="{Binding SelectedFilterScheme.Title}" Command="{Binding NewSchemeCommand}"
-                                        LargeIcon="{orchestra:FontImage {x:Static ribbon:FontAwesome.Plus}}" 
-                                        ToolTip="{Binding SelectedFilterScheme}" ClosePopupOnMouseDown="True">
-                        <views:FilterBuilderControl RawCollection="{Binding RawItems}" CloseViewModelOnUnloaded="False" />
-                    </fluent:SplitButton>-->
+
+                    <fluent:Button Header="Manage"
+                                   Command="{Binding ManageFeatureToggles}"
+                                   Size="Large" />
 
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>

@@ -4,7 +4,8 @@
                   xmlns:catel="http://schemas.catelproject.com"
                   xmlns:views="clr-namespace:Orc.FeatureToggles.Views"
                   Width="700" SizeToContent="Height"
-                  MinHeight="400" MinWidth="500">
+                  ResizeMode="CanResizeWithGrip"
+                  MinHeight="600" MinWidth="500">
 
     <views:ManageFeatureTogglesView />
 

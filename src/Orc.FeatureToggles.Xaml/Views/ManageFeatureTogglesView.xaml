@@ -9,8 +9,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" MinHeight="200" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
 
@@ -46,7 +44,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -54,16 +51,16 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" 
+            <Label Grid.Row="0" Grid.Column="0" 
                    Content="{Binding SelectedToggle.Name}" />
+
+            <Button Grid.Row="0" Grid.Column="1"
+                    Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
+                    Command="{Binding Toggle}" />
 
             <Label Grid.Row="1" Grid.ColumnSpan="2">
                 <TextBlock TextWrapping="Wrap" Text="{Binding SelectedToggle.Description}" />
             </Label>
-
-            <Button Grid.Row="3" Grid.Column="1"
-                    Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
-                    Command="{Binding Toggle}" />
         </Grid>
     </Grid>
     
