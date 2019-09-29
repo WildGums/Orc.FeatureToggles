@@ -16,6 +16,7 @@ public static class ModuleInitializer
         var serviceLocator = ServiceLocator.Default;
 
         serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleService, FeatureToggleService>();
+        serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleInitializationService, FeatureToggleInitializationService>();
         serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleSerializationService, FeatureToggleSerializationService>();
 
         var languageService = serviceLocator.ResolveType<ILanguageService>();

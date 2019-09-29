@@ -18,5 +18,6 @@
         Task LoadAsync();
         bool RemoveToggle(FeatureToggle toggle);
         Task SaveAsync();
+        Task InitializeAsync();
     }
 }

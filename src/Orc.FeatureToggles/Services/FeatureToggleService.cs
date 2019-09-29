@@ -16,14 +16,18 @@
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
+        private readonly IFeatureToggleInitializationService _featureToggleInitializationService;
         private readonly IFeatureToggleSerializationService _featureToggleSerializationService;
 
         private readonly Dictionary<string, FeatureToggle> _featureToggles = new Dictionary<string, FeatureToggle>(StringComparer.OrdinalIgnoreCase);
 
-        public FeatureToggleService(IFeatureToggleSerializationService featureToggleSerializationService)
+        public FeatureToggleService(IFeatureToggleInitializationService featureToggleInitializationService,
+            IFeatureToggleSerializationService featureToggleSerializationService)
         {
+            Argument.IsNotNull(() => featureToggleInitializationService);
             Argument.IsNotNull(() => featureToggleSerializationService);
 
+            _featureToggleInitializationService = featureToggleInitializationService;
             _featureToggleSerializationService = featureToggleSerializationService;
         }
 
@@ -93,40 +97,54 @@
             return true;
         }
 
+        [Time]
+        public async Task InitializeAsync()
+        {
+            Log.Debug("Initializing feature toggles");
+
+            var toggles = await _featureToggleInitializationService.FindTogglesAsync();
+
+            foreach (var toggle in toggles)
+            {
+                AddToggle(toggle);
+            }
+        }
+
+        [Time]
         public async Task LoadAsync()
         {
-            Log.Debug("Loading feature toggles");
+            Log.Debug("Loading feature toggle values");
 
-            foreach (var toggle in _featureToggles.Values)
+            var toggleValues = await _featureToggleSerializationService.LoadAsync();
+            var count = 0;
+
+            foreach (var toggleValue in toggleValues)
             {
-                Unsubscribe(toggle);
-            }
+                var toggle = GetToggle(toggleValue.Name);
+                if (toggle != null)
+                {
+                    Log.Debug($"  * {toggle.Name} => {toggleValue.Value}");
 
-            _featureToggles.Clear();
-
-            var newToggles = await _featureToggleSerializationService.LoadAsync();
-
-            foreach (var toggle in newToggles)
-            {
-                Subscribe(toggle);
-
-                _featureToggles[toggle.Name] = toggle;
+                    toggle.Value = toggleValue.Value;
+                    count++;
+                }
             }
 
             Loaded?.Invoke(this, EventArgs.Empty);
 
-            Log.Debug($"Loaded '{_featureToggles.Count}' feature toggles");
+            Log.Debug($"Loaded '{count}' feature toggle values");
         }
 
+        [Time]
         public async Task SaveAsync()
         {
-            Log.Debug("Saving feature toggles");
+            Log.Debug("Saving feature toggle values");
 
-            await _featureToggleSerializationService.SaveAsync(_featureToggles.Values.ToList());
+            await _featureToggleSerializationService.SaveAsync(_featureToggles.Values.Select(x => new FeatureToggleValue(x)).ToList());
 
             Saved?.Invoke(this, EventArgs.Empty);
 
-            Log.Debug($"Saved '{_featureToggles.Count}' feature toggles");
+            Log.Debug($"Saved '{_featureToggles.Count}' feature toggle values");
         }
 
         private void Subscribe(FeatureToggle toggle)

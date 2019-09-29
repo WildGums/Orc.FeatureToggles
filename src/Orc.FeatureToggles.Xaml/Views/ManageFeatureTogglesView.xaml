@@ -29,8 +29,7 @@
 
         <ListView Grid.Row="2" Grid.ColumnSpan="3" 
                   ItemsSource="{Binding Toggles}" 
-                  SelectedValue="{Binding SelectedToggle}" 
-                  SelectedValuePath="Name">
+                  SelectedValue="{Binding SelectedToggle}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_Name}" 

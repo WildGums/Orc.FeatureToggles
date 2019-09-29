@@ -48,5 +48,13 @@
             toggle.Toggle();
             return true;
         }
+
+        public static async Task InitializeAndLoadAsync(this IFeatureToggleService service)
+        {
+            Argument.IsNotNull(() => service);
+
+            await service.InitializeAsync();
+            await service.LoadAsync();
+        }
     }
 }

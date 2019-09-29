@@ -34,22 +34,22 @@
             return Catel.IO.Path.GetApplicationDataDirectory();
         }
 
-        public async Task<List<FeatureToggle>> LoadAsync()
+        public async Task<List<FeatureToggleValue>> LoadAsync()
         {
-            var toggles = new List<FeatureToggle>();
+            var toggles = new List<FeatureToggleValue>();
 
             var fileName = GetFileName();
 
-            Log.Debug($"Loading feature toggles from '{fileName}'");
+            Log.Debug($"Loading feature toggle values from '{fileName}'");
 
             if (_fileService.Exists(fileName))
             {
                 using (var stream = _fileService.OpenRead(fileName))
                 {
-                    var deserializedToggles = (List<FeatureToggle>)_xmlSerializer.Deserialize(typeof(List<FeatureToggle>), stream);
-                    if (deserializedToggles != null)
+                    var deserializedToggleValues = (List<FeatureToggleValue>)_xmlSerializer.Deserialize(typeof(List<FeatureToggleValue>), stream);
+                    if (deserializedToggleValues != null)
                     {
-                        toggles.AddRange(deserializedToggles);
+                        toggles.AddRange(deserializedToggleValues);
                     }
                 }
             }
@@ -57,15 +57,15 @@
             return toggles;
         }
 
-        public async Task SaveAsync(List<FeatureToggle> featureToggles)
+        public async Task SaveAsync(List<FeatureToggleValue> toggleValues)
         {
             var fileName = GetFileName();
 
-            Log.Debug($"Saving feature toggles to '{fileName}'");
+            Log.Debug($"Saving feature toggle values to '{fileName}'");
 
             using (var stream = _fileService.Create(fileName))
             {
-                _xmlSerializer.Serialize(featureToggles, stream);
+                _xmlSerializer.Serialize(toggleValues, stream);
             }
         }
     }

@@ -27,16 +27,23 @@ namespace Orc.FeatureToggles.Example.Services
             _serviceLocator = serviceLocator;
         }
 
-        public override Task InitializeBeforeCreatingShellAsync()
+        public override async Task InitializeBeforeCreatingShellAsync()
         {
             InitializeFonts();
 
-            return TaskHelper.Completed;
+            await InitializeFeatureTogglesAsync();
         }
 
         private void InitializeFonts()
         {
             FontImage.DefaultBrush = new SolidColorBrush(Color.FromArgb(255, 87, 87, 87));
+        }
+
+        private async Task InitializeFeatureTogglesAsync()
+        {
+            var featureToggleService = _serviceLocator.ResolveType<IFeatureToggleService>();
+
+            await featureToggleService.InitializeAndLoadAsync();
         }
     }
 }

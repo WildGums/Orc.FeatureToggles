@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using Catel.Data;
 
-    public class FeatureToggle : ModelBase
+    public class FeatureToggle : ObservableObject
     {
         private bool? _value;
 
