@@ -55,14 +55,12 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.ColumnSpan="2" 
-                   Content="{Binding Name}" />
+                   Content="{Binding SelectedToggle.Name}" />
 
             <Label Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBlock TextWrapping="Wrap" Text="{Binding Description}" />
+                <TextBlock TextWrapping="Wrap" Text="{Binding SelectedToggle.Description}" />
             </Label>
 
-            <!--<Label Grid.Row="3" Grid.Column="0"
-                   Content="{Binding Value}" />-->
             <Button Grid.Row="3" Grid.Column="1"
                     Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
                     Command="{Binding Toggle}" />

@@ -63,6 +63,9 @@
 
             Log.Debug($"Saving feature toggle values to '{fileName}'");
 
+            var directory = Path.GetDirectoryName(fileName);
+            _directoryService.Create(directory);
+
             using (var stream = _fileService.Create(fileName))
             {
                 _xmlSerializer.Serialize(toggleValues, stream);

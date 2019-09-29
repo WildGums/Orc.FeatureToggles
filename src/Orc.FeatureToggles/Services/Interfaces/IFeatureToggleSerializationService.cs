@@ -7,6 +7,6 @@
     public interface IFeatureToggleSerializationService
     {
         Task<List<FeatureToggleValue>> LoadAsync();
-        Task SaveAsync(List<FeatureToggleValue> featureToggles);
+        Task SaveAsync(List<FeatureToggleValue> toggleValues);
     }
 }
