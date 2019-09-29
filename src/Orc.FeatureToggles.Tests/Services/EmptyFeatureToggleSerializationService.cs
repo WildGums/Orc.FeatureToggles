@@ -8,12 +8,12 @@
 
     public class EmptyFeatureToggleSerializationService : IFeatureToggleSerializationService
     {
-        public async Task<List<FeatureToggle>> LoadAsync()
+        public async Task<List<FeatureToggleValue>> LoadAsync()
         {
-            return new List<FeatureToggle>();
+            return new List<FeatureToggleValue>();
         }
 
-        public async Task SaveAsync(List<FeatureToggle> featureToggles)
+        public async Task SaveAsync(List<FeatureToggleValue> toggleValues)
         {
             
         }

@@ -5,13 +5,15 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Catel.IoC;
     using NUnit.Framework;
 
     public class FeatureToggleServiceFacts
     {
         private static IFeatureToggleService CreateService()
         {
-            return new FeatureToggleService(new EmptyFeatureToggleSerializationService());
+            return new FeatureToggleService(new FeatureToggleInitializationService(TypeFactory.Default), 
+                new EmptyFeatureToggleSerializationService());
         }
 
         [TestFixture]

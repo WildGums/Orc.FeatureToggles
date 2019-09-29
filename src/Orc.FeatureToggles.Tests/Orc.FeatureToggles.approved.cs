@@ -6,12 +6,8 @@ public class static ModuleInitializer
 }
 namespace Orc.FeatureToggles
 {
-    public class FeatureToggle : Catel.Data.ModelBase
+    public class FeatureToggle : Catel.Data.ObservableObject
     {
-        public static readonly Catel.Data.PropertyData DefaultValueProperty;
-        public static readonly Catel.Data.PropertyData DescriptionProperty;
-        public static readonly Catel.Data.PropertyData IsHiddenProperty;
-        public static readonly Catel.Data.PropertyData NameProperty;
         public FeatureToggle() { }
         public bool DefaultValue { get; set; }
         public string Description { get; set; }
@@ -27,16 +23,21 @@ namespace Orc.FeatureToggles
     {
         public static void Toggle(this Orc.FeatureToggles.FeatureToggle toggle) { }
     }
+    public class FeatureToggleInitializationService : Orc.FeatureToggles.IFeatureToggleInitializationService
+    {
+        public FeatureToggleInitializationService(Catel.IoC.ITypeFactory typeFactory) { }
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle>> FindTogglesAsync() { }
+    }
     public class FeatureToggleSerializationService : Orc.FeatureToggles.IFeatureToggleSerializationService
     {
         public FeatureToggleSerializationService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Runtime.Serialization.Xml.IXmlSerializer xmlSerializer) { }
         protected virtual string GetFileName() { }
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle>> LoadAsync() { }
-        public System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle> featureToggles) { }
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue>> LoadAsync() { }
+        public System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue> toggleValues) { }
     }
     public class FeatureToggleService : Orc.FeatureToggles.IFeatureToggleService
     {
-        public FeatureToggleService(Orc.FeatureToggles.IFeatureToggleSerializationService featureToggleSerializationService) { }
+        public FeatureToggleService(Orc.FeatureToggles.IFeatureToggleInitializationService featureToggleInitializationService, Orc.FeatureToggles.IFeatureToggleSerializationService featureToggleSerializationService) { }
         public event System.EventHandler<System.EventArgs> Loaded;
         public event System.EventHandler<System.EventArgs> Saved;
         public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleAdded;
@@ -45,14 +46,32 @@ namespace Orc.FeatureToggles
         public bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
         public Orc.FeatureToggles.FeatureToggle GetToggle(string name) { }
         public System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggle> GetToggles() { }
+        public System.Threading.Tasks.Task InitializeAsync() { }
         public System.Threading.Tasks.Task LoadAsync() { }
         public bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
         public System.Threading.Tasks.Task SaveAsync() { }
     }
+    public class FeatureToggleValue : Catel.Data.ModelBase
+    {
+        public static readonly Catel.Data.PropertyData NameProperty;
+        public static readonly Catel.Data.PropertyData ValueProperty;
+        public FeatureToggleValue() { }
+        public FeatureToggleValue(Orc.FeatureToggles.FeatureToggle toggle) { }
+        public string Name { get; set; }
+        public bool Value { get; set; }
+    }
+    public interface IFeatureToggleInitializationService
+    {
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle>> FindTogglesAsync();
+    }
+    public interface IFeatureToggleProvider
+    {
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle>> ProvideTogglesAsync();
+    }
     public interface IFeatureToggleSerializationService
     {
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle>> LoadAsync();
-        System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggle> featureToggles);
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue>> LoadAsync();
+        System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue> toggleValues);
     }
     public interface IFeatureToggleService
     {
@@ -64,6 +83,7 @@ namespace Orc.FeatureToggles
         bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle);
         Orc.FeatureToggles.FeatureToggle GetToggle(string name);
         System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggle> GetToggles();
+        System.Threading.Tasks.Task InitializeAsync();
         System.Threading.Tasks.Task LoadAsync();
         bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle);
         System.Threading.Tasks.Task SaveAsync();
@@ -71,6 +91,7 @@ namespace Orc.FeatureToggles
     public class static IFeatureToggleServiceExtensions
     {
         public static System.Nullable<bool> GetValue(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
+        public static System.Threading.Tasks.Task InitializeAndLoadAsync(this Orc.FeatureToggles.IFeatureToggleService service) { }
         public static bool RemoveToggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
         public static bool Toggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
     }
