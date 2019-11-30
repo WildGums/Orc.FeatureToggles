@@ -8,6 +8,7 @@
     using Catel;
     using Catel.Logging;
     using Catel.Runtime.Serialization.Xml;
+    using Catel.Services;
     using Orc.FileSystem;
 
     public class FeatureToggleSerializationService : IFeatureToggleSerializationService
@@ -17,22 +18,25 @@
         private readonly IDirectoryService _directoryService;
         private readonly IFileService _fileService;
         private readonly IXmlSerializer _xmlSerializer;
+        private readonly IAppDataService _appDataService;
 
         public FeatureToggleSerializationService(IDirectoryService directoryService, IFileService fileService,
-            IXmlSerializer xmlSerializer)
+            IXmlSerializer xmlSerializer, IAppDataService appDataService)
         {
             Argument.IsNotNull(() => directoryService);
             Argument.IsNotNull(() => fileService);
             Argument.IsNotNull(() => xmlSerializer);
+            Argument.IsNotNull(() => appDataService);
 
             _directoryService = directoryService;
             _fileService = fileService;
             _xmlSerializer = xmlSerializer;
+            _appDataService = appDataService;
         }
 
         protected virtual string GetFileName()
         {
-            return Path.Combine(Catel.IO.Path.GetApplicationDataDirectory(), "FeatureToggles.xml");
+            return Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "FeatureToggles.xml");
         }
 
         public async Task<List<FeatureToggleValue>> LoadAsync()
