@@ -32,7 +32,7 @@ namespace Orc.FeatureToggles
     }
     public class FeatureToggleSerializationService : Orc.FeatureToggles.IFeatureToggleSerializationService
     {
-        public FeatureToggleSerializationService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Runtime.Serialization.Xml.IXmlSerializer xmlSerializer) { }
+        public FeatureToggleSerializationService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Runtime.Serialization.Xml.IXmlSerializer xmlSerializer, Catel.Services.IAppDataService appDataService) { }
         protected virtual string GetFileName() { }
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue>> LoadAsync() { }
         public System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.List<Orc.FeatureToggles.FeatureToggleValue> toggleValues) { }
