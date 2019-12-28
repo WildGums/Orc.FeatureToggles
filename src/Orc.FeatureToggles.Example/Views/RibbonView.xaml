@@ -1,0 +1,21 @@
+﻿<catel:UserControl x:Class="Orc.FeatureToggles.Example.Views.RibbonView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:catel="http://schemas.catelproject.com"
+                   xmlns:fluent="urn:fluent-ribbon"
+                   xmlns:orchestra="http://schemas.wildgums.com/orchestra"
+                   xmlns:views="clr-namespace:Orc.FeatureToggles.Views;assembly=Orc.FeatureToggles.Xaml">
+    <fluent:Ribbon>
+        <fluent:Ribbon.Tabs>
+            <fluent:RibbonTabItem Header="Feature toggles">
+                <fluent:RibbonGroupBox Header="Feature toggles">
+
+                    <fluent:Button Header="Manage"
+                                   Command="{Binding ManageFeatureToggles}"
+                                   Size="Large" />
+
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+        </fluent:Ribbon.Tabs>
+    </fluent:Ribbon>
+</catel:UserControl>

@@ -1,0 +1,78 @@
+﻿<catel:UserControl x:Class="Orc.FeatureToggles.Views.ManageFeatureTogglesView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:catel="http://schemas.catelproject.com"
+                   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" MinHeight="200" />
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="112" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{catel:LanguageBinding FeatureToggles_ShowTogglesContaining}" />
+        <TextBox Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding ToggleFilter}">
+            <i:Interaction.Behaviors>
+                <catel:UpdateBindingOnTextChanged UpdateDelay="500" />
+            </i:Interaction.Behaviors>
+        </TextBox>
+
+        <ListView Grid.Row="2" Grid.ColumnSpan="3" 
+                  ItemsSource="{Binding Toggles}" 
+                  SelectedValue="{Binding SelectedToggle}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_Name}" 
+                                    DisplayMemberBinding="{Binding Name}" Width="300" />
+                    <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_EffectiveValue}" 
+                                    ToolTipService.ToolTip="{catel:LanguageBinding FeatureToggles_EffectiveValue_ToolTip}"
+                                    DisplayMemberBinding="{Binding EffectiveValue}" Width="100" />
+                    <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_Value}" 
+                                    DisplayMemberBinding="{Binding Value}" Width="100" />
+                    <GridViewColumn Header="{catel:LanguageBinding FeatureToggles_DefaultValue}" 
+                                    DisplayMemberBinding="{Binding DefaultValue}" Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" 
+                   Content="{Binding SelectedToggle.Name}" />
+
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="{catel:LanguageBinding FeatureToggles_Reset}" 
+                        Command="{Binding Reset}"
+                        MinWidth="100" />
+
+                <Button Content="{catel:LanguageBinding FeatureToggles_Toggle}" 
+                        Command="{Binding Toggle}" 
+                        MinWidth="100" />
+            </StackPanel>
+            
+            <Label Grid.Row="1" Grid.ColumnSpan="2">
+                <TextBlock TextWrapping="Wrap" Text="{Binding SelectedToggle.Description}" />
+            </Label>
+        </Grid>
+    </Grid>
+    
+</catel:UserControl>
