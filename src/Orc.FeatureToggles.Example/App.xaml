@@ -8,7 +8,7 @@
                 <ResourceDictionary Source="/Orc.FeatureToggles.Xaml;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
              
-            <SolidColorBrush x:Key="AccentColorBrush" Color="LightSeaGreen" />
+            <SolidColorBrush x:Key="AccentColorBrush" Color="Orange" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
