@@ -36,7 +36,7 @@ namespace Orc.FeatureToggles.Example.Services
 
         private void InitializeFonts()
         {
-            FontImage.DefaultBrush = new SolidColorBrush(Color.FromArgb(255, 87, 87, 87));
+            Orc.Theming.FontImage.DefaultBrush = new SolidColorBrush(Color.FromArgb(255, 87, 87, 87));
         }
 
         private async Task InitializeFeatureTogglesAsync()

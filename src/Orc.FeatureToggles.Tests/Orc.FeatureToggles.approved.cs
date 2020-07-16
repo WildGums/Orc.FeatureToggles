@@ -1,6 +1,6 @@
-﻿[assembly: System.Resources.NeutralResourcesLanguageAttribute("en-US")]
-[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.6", FrameworkDisplayName=".NET Framework 4.6")]
-public class static ModuleInitializer
+﻿[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.1", FrameworkDisplayName="")]
+public static class ModuleInitializer
 {
     public static void Initialize() { }
 }
@@ -14,13 +14,13 @@ namespace Orc.FeatureToggles
         public bool EffectiveValue { get; }
         public bool IsHidden { get; set; }
         public string Name { get; set; }
-        public System.Nullable<bool> Value { get; set; }
+        public bool? Value { get; set; }
         public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
         protected override void OnPropertyChanged(Catel.Data.AdvancedPropertyChangedEventArgs e) { }
-        protected void RaiseToggled(System.Nullable<bool> oldValue, System.Nullable<bool> newValue) { }
+        protected void RaiseToggled(bool? oldValue, bool? newValue) { }
         public override string ToString() { }
     }
-    public class static FeatureToggleExtensions
+    public static class FeatureToggleExtensions
     {
         public static void Reset(this Orc.FeatureToggles.FeatureToggle toggle) { }
         public static void Toggle(this Orc.FeatureToggles.FeatureToggle toggle) { }
@@ -43,8 +43,8 @@ namespace Orc.FeatureToggles
         public event System.EventHandler<System.EventArgs> Loaded;
         public event System.EventHandler<System.EventArgs> Saved;
         public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleAdded;
-        public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
         public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleRemoved;
+        public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
         public bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
         public Orc.FeatureToggles.FeatureToggle GetToggle(string name) { }
         public System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggle> GetToggles() { }
@@ -60,7 +60,7 @@ namespace Orc.FeatureToggles
         public FeatureToggleValue() { }
         public FeatureToggleValue(Orc.FeatureToggles.FeatureToggle toggle) { }
         public string Name { get; set; }
-        public System.Nullable<bool> Value { get; set; }
+        public bool? Value { get; set; }
     }
     public interface IFeatureToggleInitializationService
     {
@@ -77,11 +77,11 @@ namespace Orc.FeatureToggles
     }
     public interface IFeatureToggleService
     {
-        public event System.EventHandler<System.EventArgs> Loaded;
-        public event System.EventHandler<System.EventArgs> Saved;
-        public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleAdded;
-        public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
-        public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleRemoved;
+        event System.EventHandler<System.EventArgs> Loaded;
+        event System.EventHandler<System.EventArgs> Saved;
+        event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleAdded;
+        event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs> ToggleRemoved;
+        event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
         bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle);
         Orc.FeatureToggles.FeatureToggle GetToggle(string name);
         System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggle> GetToggles();
@@ -90,23 +90,23 @@ namespace Orc.FeatureToggles
         bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle);
         System.Threading.Tasks.Task SaveAsync();
     }
-    public class static IFeatureToggleServiceExtensions
+    public static class IFeatureToggleServiceExtensions
     {
         public static bool GetValue(this Orc.FeatureToggles.IFeatureToggleService service, string name, bool fallbackValue) { }
         public static System.Threading.Tasks.Task InitializeAndLoadAsync(this Orc.FeatureToggles.IFeatureToggleService service) { }
         public static bool RemoveToggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
         public static bool Toggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
     }
-    public class ToggledEventArgs : Orc.FeatureToggles.ToggleEventArgs
-    {
-        public ToggledEventArgs(Orc.FeatureToggles.FeatureToggle toggle, System.Nullable<bool> oldValue, System.Nullable<bool> newValue) { }
-        public System.Nullable<bool> NewValue { get; }
-        public System.Nullable<bool> OldValue { get; }
-    }
     public class ToggleEventArgs : System.EventArgs
     {
         public ToggleEventArgs(Orc.FeatureToggles.FeatureToggle toggle) { }
         public Orc.FeatureToggles.FeatureToggle Toggle { get; }
         public bool IsToggle(string name) { }
+    }
+    public class ToggledEventArgs : Orc.FeatureToggles.ToggleEventArgs
+    {
+        public ToggledEventArgs(Orc.FeatureToggles.FeatureToggle toggle, bool? oldValue, bool? newValue) { }
+        public bool? NewValue { get; }
+        public bool? OldValue { get; }
     }
 }

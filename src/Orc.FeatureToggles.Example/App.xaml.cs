@@ -8,14 +8,10 @@
 namespace Orc.FeatureToggles.Example
 {
     using System.Globalization;
-    using System.Threading;
     using System.Windows;
-    using Catel.ApiCop;
-    using Catel.ApiCop.Listeners;
     using Catel.Logging;
     using Catel.IoC;
     using Catel.Services;
-    using Catel.Windows;
     using Orchestra;
     using Orchestra.Services;
     using Orchestra.Views;
@@ -52,15 +48,6 @@ namespace Orc.FeatureToggles.Example
             await shellService.CreateAsync<ShellWindow>();
 
             base.OnStartup(e);
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            // Get advisory report in console
-            ApiCopManager.AddListener(new ConsoleApiCopListener());
-            ApiCopManager.WriteResults();
-
-            base.OnExit(e);
         }
     }
 }
