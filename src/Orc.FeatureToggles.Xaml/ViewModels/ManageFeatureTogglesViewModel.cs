@@ -51,7 +51,7 @@
 
         private bool OnResetCanExecute()
         {
-            return SelectedToggle != null;
+            return SelectedToggle is not null;
         }
 
         private void OnResetExecute()
@@ -63,7 +63,7 @@
 
         private bool OnToggleCanExecute()
         {
-            return SelectedToggle != null;
+            return SelectedToggle is not null;
         }
 
         private void OnToggleExecute()
@@ -111,7 +111,7 @@
             }
 
             // restore selection
-            if (selectedToggle != null && Toggles.Any(x => string.Equals(x.Name, selectedToggle)))
+            if (selectedToggle is not null && Toggles.Any(x => string.Equals(x.Name, selectedToggle)))
             {
                 SelectedToggle = selectedToggle;
             }

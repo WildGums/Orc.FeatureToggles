@@ -52,7 +52,7 @@
                 using (var stream = _fileService.OpenRead(fileName))
                 {
                     var deserializedToggleValues = (List<FeatureToggleValue>)_xmlSerializer.Deserialize(typeof(List<FeatureToggleValue>), stream);
-                    if (deserializedToggleValues != null)
+                    if (deserializedToggleValues is not null)
                     {
                         toggles.AddRange(deserializedToggleValues);
                     }

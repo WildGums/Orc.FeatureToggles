@@ -121,7 +121,7 @@
             foreach (var toggleValue in toggleValues)
             {
                 var toggle = GetToggle(toggleValue.Name);
-                if (toggle != null)
+                if (toggle is not null)
                 {
                     Log.Debug($"  * {toggle.Name} => {toggleValue.Value}");
 
