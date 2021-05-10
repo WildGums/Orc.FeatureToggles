@@ -6,7 +6,7 @@ public static class ModuleInitializer
 }
 namespace Orc.FeatureToggles
 {
-    public class FeatureToggle : Catel.Data.ObservableObject
+    public class FeatureToggle : Catel.Data.ObservableObject, System.IComparable, System.IComparable<Orc.FeatureToggles.FeatureToggle>
     {
         public FeatureToggle() { }
         public bool DefaultValue { get; set; }
@@ -16,6 +16,8 @@ namespace Orc.FeatureToggles
         public string Name { get; set; }
         public bool? Value { get; set; }
         public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs> Toggled;
+        public int CompareTo(Orc.FeatureToggles.FeatureToggle other) { }
+        public int CompareTo(object obj) { }
         protected override void OnPropertyChanged(Catel.Data.AdvancedPropertyChangedEventArgs e) { }
         protected void RaiseToggled(bool? oldValue, bool? newValue) { }
         public override string ToString() { }
