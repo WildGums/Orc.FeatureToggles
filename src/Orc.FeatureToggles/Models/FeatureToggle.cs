@@ -1,13 +1,9 @@
 ﻿namespace Orc.FeatureToggles
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Catel.Data;
 
-    public class FeatureToggle : ObservableObject
+    public class FeatureToggle : ObservableObject, IComparable<FeatureToggle>, IComparable
     {
         private bool? _value;
 
@@ -45,6 +41,24 @@
         protected void RaiseToggled(bool? oldValue, bool? newValue)
         {
             Toggled?.Invoke(this, new ToggledEventArgs(this, oldValue, newValue));
+        }
+
+        public int CompareTo(FeatureToggle other)
+        {
+            if (Name is null)
+            {
+                return -1;
+            }
+            return Name.CompareTo(other.Name);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is FeatureToggle)
+            {
+                return CompareTo(obj as FeatureToggle);
+            }
+            return -1;
         }
 
         public override string ToString()
