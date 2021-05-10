@@ -54,9 +54,9 @@
 
         public int CompareTo(object obj)
         {
-            if (obj is FeatureToggle)
+            if (obj is FeatureToggle toggle)
             {
-                return CompareTo(obj as FeatureToggle);
+                return CompareTo(toggle);
             }
             return -1;
         }

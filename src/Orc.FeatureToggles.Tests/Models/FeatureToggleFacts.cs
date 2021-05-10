@@ -11,9 +11,7 @@
         [TestCase]
         public static void CanBeOrdered()
         {
-            Assert.DoesNotThrow(() =>
-            {
-                var toggles = new List<FeatureToggle>
+            var toggles = new List<FeatureToggle>
                 {
                     new FeatureToggle(),
                     new FeatureToggle(),
@@ -21,8 +19,7 @@
                     new DummyFeatureToggle()
                 };
 
-                toggles = toggles.OrderBy(x => x).ToList();
-            });
+            toggles = toggles.OrderBy(x => x).ToList();
         }
 
         private class DummyFeatureToggle : FeatureToggle
