@@ -1,15 +1,10 @@
 ﻿namespace Orc.FeatureToggles
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Catel;
-    using Catel.IoC;
     using Catel.Logging;
-    using Catel.Threading;
     using MethodTimer;
 
     public class FeatureToggleService : IFeatureToggleService
@@ -24,29 +19,29 @@
         public FeatureToggleService(IFeatureToggleInitializationService featureToggleInitializationService,
             IFeatureToggleSerializationService featureToggleSerializationService)
         {
-            Argument.IsNotNull(() => featureToggleInitializationService);
-            Argument.IsNotNull(() => featureToggleSerializationService);
+            ArgumentNullException.ThrowIfNull(featureToggleInitializationService);
+            ArgumentNullException.ThrowIfNull(featureToggleSerializationService);
 
             _featureToggleInitializationService = featureToggleInitializationService;
             _featureToggleSerializationService = featureToggleSerializationService;
         }
 
-        public event EventHandler<ToggleEventArgs> ToggleAdded;
-        public event EventHandler<ToggleEventArgs> ToggleRemoved;
+        public event EventHandler<ToggleEventArgs>? ToggleAdded;
+        public event EventHandler<ToggleEventArgs>? ToggleRemoved;
 
-        public event EventHandler<EventArgs> Loaded;
-        public event EventHandler<EventArgs> Saved;
+        public event EventHandler<EventArgs>? Loaded;
+        public event EventHandler<EventArgs>? Saved;
 
-        public event EventHandler<ToggledEventArgs> Toggled;
+        public event EventHandler<ToggledEventArgs>? Toggled;
 
-        public IEnumerable<FeatureToggle> GetToggles()
+        public FeatureToggle[] GetToggles()
         {
-            return _featureToggles.Values;
+            return _featureToggles.Values.ToArray();
         }
 
-        public FeatureToggle GetToggle(string name)
+        public FeatureToggle? GetToggle(string name)
         {
-            Argument.IsNotNull(() => name);
+            ArgumentNullException.ThrowIfNull(name);
 
             if (!_featureToggles.TryGetValue(name, out var toggle))
             {
@@ -59,7 +54,7 @@
 
         public bool AddToggle(FeatureToggle toggle)
         {
-            Argument.IsNotNull(() => toggle);
+            ArgumentNullException.ThrowIfNull(toggle);
 
             Log.Debug($"Adding feature toggle '{toggle}'");
 
@@ -80,7 +75,7 @@
 
         public bool RemoveToggle(FeatureToggle toggle)
         {
-            Argument.IsNotNull(() => toggle);
+            ArgumentNullException.ThrowIfNull(toggle);
 
             Log.Debug($"Removing feature toggle '{toggle}'");
 
@@ -157,7 +152,7 @@
             toggle.Toggled -= OnFeatureToggleToggled;
         }
 
-        private async void OnFeatureToggleToggled(object sender, ToggledEventArgs e)
+        private async void OnFeatureToggleToggled(object? sender, ToggledEventArgs e)
         {
             Log.Info($"Feature toggle '{e.Toggle}' was toggled from '{e.OldValue}' => '{e.NewValue}'");
 

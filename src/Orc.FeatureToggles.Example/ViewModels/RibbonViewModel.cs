@@ -23,8 +23,8 @@
 
         public RibbonViewModel(IFeatureToggleService featureToggleservice, IUIVisualizerService uiVisualizerService)
         {
-            Argument.IsNotNull(() => featureToggleservice);
-            Argument.IsNotNull(() => uiVisualizerService);
+            ArgumentNullException.ThrowIfNull(featureToggleservice);
+            ArgumentNullException.ThrowIfNull(uiVisualizerService);
 
             _featureToggleService = featureToggleservice;
             _uiVisualizerService = uiVisualizerService;

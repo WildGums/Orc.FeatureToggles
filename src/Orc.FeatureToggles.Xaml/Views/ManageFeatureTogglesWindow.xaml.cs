@@ -10,7 +10,7 @@
         {
         }
 
-        public ManageFeatureTogglesWindow(ManageFeatureTogglesViewModel viewModel)
+        public ManageFeatureTogglesWindow(ManageFeatureTogglesViewModel? viewModel)
             : base(viewModel, DataWindowMode.Close)
         {
             InitializeComponent();

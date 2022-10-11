@@ -1,6 +1,5 @@
 ﻿namespace Orc.FeatureToggles.ViewModels
 {
-    using Catel;
     using Catel.Collections;
     using Catel.MVVM;
     using Catel.Services;
@@ -17,10 +16,10 @@
         public ManageFeatureTogglesViewModel(IFeatureToggleService featureToggleService, ICommandManager commandManager,
             ILanguageService languageService, IMessageService messageService)
         {
-            Argument.IsNotNull(() => featureToggleService);
-            Argument.IsNotNull(() => commandManager);
-            Argument.IsNotNull(() => languageService);
-            Argument.IsNotNull(() => messageService);
+            ArgumentNullException.ThrowIfNull(featureToggleService);
+            ArgumentNullException.ThrowIfNull(commandManager);
+            ArgumentNullException.ThrowIfNull(languageService);
+            ArgumentNullException.ThrowIfNull(messageService);
 
             _featureToggleService = featureToggleService;
             _languageService = languageService;
@@ -33,20 +32,17 @@
             Toggle = new Command(OnToggleExecute, OnToggleCanExecute);
         }
 
-        #region Properties
         public override string Title
         {
-            get { return _languageService.GetString("FeatureToggles_ManageFeatureToggles"); }
+            get { return _languageService.GetRequiredString("FeatureToggles_ManageFeatureToggles"); }
         }
 
         public string ToggleFilter { get; set; }
 
         public FastObservableCollection<FeatureToggle> Toggles { get; private set; }
 
-        public FeatureToggle SelectedToggle { get; set; }
-        #endregion
+        public FeatureToggle? SelectedToggle { get; set; }
 
-        #region Commands
         public Command Reset { get; private set; }
 
         private bool OnResetCanExecute()
@@ -56,7 +52,7 @@
 
         private void OnResetExecute()
         {
-            SelectedToggle.Reset();
+            SelectedToggle?.Reset();
         }
 
         public Command Toggle { get; private set; }
@@ -68,11 +64,9 @@
 
         private void OnToggleExecute()
         {
-            SelectedToggle.Toggle();
+            SelectedToggle?.Toggle();
         }
-        #endregion
-
-        #region Methods
+        
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
@@ -121,6 +115,5 @@
         {
             UpdateToggles();
         }
-        #endregion
     }
 }

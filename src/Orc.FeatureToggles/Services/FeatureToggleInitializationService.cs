@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using Catel;
     using Catel.IoC;
     using Catel.Logging;
     using Catel.Reflection;
@@ -19,13 +17,13 @@
 
         public FeatureToggleInitializationService(ITypeFactory typeFactory)
         {
-            Argument.IsNotNull(() => typeFactory);
+            ArgumentNullException.ThrowIfNull(typeFactory);
 
             _typeFactory = typeFactory;
         }
 
         [Time]
-        public async Task<List<FeatureToggle>> FindTogglesAsync()
+        public async Task<FeatureToggle[]> FindTogglesAsync()
         {
             var toggles = new List<FeatureToggle>();
 
@@ -39,10 +37,10 @@
 
                 try
                 {
-                    var provider = (IFeatureToggleProvider)_typeFactory.CreateInstance(providerType);
+                    var provider = (IFeatureToggleProvider)_typeFactory.CreateRequiredInstance(providerType);
                     var providerToggles = await provider.ProvideTogglesAsync();
 
-                    Log.Debug($"Found '{providerToggles.Count}' feature toggles using provider '{providerType.Name}'");
+                    Log.Debug($"Found '{providerToggles.Count()}' feature toggles using provider '{providerType.Name}'");
 
                     toggles.AddRange(providerToggles);
                 }
@@ -54,7 +52,7 @@
 
             Log.Debug($"Found '{toggles.Count}' feature toggles");
 
-            return toggles;
+            return toggles.ToArray();
         }
     }
 }

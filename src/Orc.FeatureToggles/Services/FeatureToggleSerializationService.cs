@@ -23,10 +23,10 @@
         public FeatureToggleSerializationService(IDirectoryService directoryService, IFileService fileService,
             IXmlSerializer xmlSerializer, IAppDataService appDataService)
         {
-            Argument.IsNotNull(() => directoryService);
-            Argument.IsNotNull(() => fileService);
-            Argument.IsNotNull(() => xmlSerializer);
-            Argument.IsNotNull(() => appDataService);
+            ArgumentNullException.ThrowIfNull(directoryService);
+            ArgumentNullException.ThrowIfNull(fileService);
+            ArgumentNullException.ThrowIfNull(xmlSerializer);
+            ArgumentNullException.ThrowIfNull(appDataService);
 
             _directoryService = directoryService;
             _fileService = fileService;
@@ -39,7 +39,7 @@
             return Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "FeatureToggles.xml");
         }
 
-        public async Task<List<FeatureToggleValue>> LoadAsync()
+        public async Task<FeatureToggleValue[]> LoadAsync()
         {
             var toggles = new List<FeatureToggleValue>();
 
@@ -51,7 +51,7 @@
             {
                 using (var stream = _fileService.OpenRead(fileName))
                 {
-                    var deserializedToggleValues = (List<FeatureToggleValue>)_xmlSerializer.Deserialize(typeof(List<FeatureToggleValue>), stream);
+                    var deserializedToggleValues = (List<FeatureToggleValue>?)_xmlSerializer.Deserialize(typeof(List<FeatureToggleValue>), stream);
                     if (deserializedToggleValues is not null)
                     {
                         toggles.AddRange(deserializedToggleValues);
@@ -59,16 +59,21 @@
                 }
             }
 
-            return toggles;
+            return toggles.ToArray();
         }
 
-        public async Task SaveAsync(List<FeatureToggleValue> toggleValues)
+        public async Task SaveAsync(IEnumerable<FeatureToggleValue> toggleValues)
         {
             var fileName = GetFileName();
 
             Log.Debug($"Saving feature toggle values to '{fileName}'");
 
             var directory = Path.GetDirectoryName(fileName);
+            if (directory is null)
+            {
+                throw Log.ErrorAndCreateException<InvalidOperationException>($"Invalid file name '{fileName}'");
+            }
+
             _directoryService.Create(directory);
 
             using (var stream = _fileService.Create(fileName))

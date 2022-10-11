@@ -7,6 +7,12 @@
     {
         private bool? _value;
 
+        public FeatureToggle()
+        {
+            Name = string.Empty;
+            Description = string.Empty;
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -36,28 +42,30 @@
 
         public bool DefaultValue { get; set; }
 
-        public event EventHandler<ToggledEventArgs> Toggled;
+        public event EventHandler<ToggledEventArgs>? Toggled;
 
         protected void RaiseToggled(bool? oldValue, bool? newValue)
         {
             Toggled?.Invoke(this, new ToggledEventArgs(this, oldValue, newValue));
         }
 
-        public int CompareTo(FeatureToggle other)
+        public int CompareTo(FeatureToggle? other)
         {
-            if (Name is null)
+            if (other is null)
             {
                 return -1;
             }
+
             return Name.CompareTo(other.Name);
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if (obj is FeatureToggle toggle)
             {
                 return CompareTo(toggle);
             }
+
             return -1;
         }
 

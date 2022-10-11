@@ -12,7 +12,7 @@
 
         public StatusBarViewModel(IFeatureToggleService featureToggleService)
         {
-            Argument.IsNotNull(() => featureToggleService);
+            ArgumentNullException.ThrowIfNull(featureToggleService);
 
             _featureToggleService = featureToggleService;
         }

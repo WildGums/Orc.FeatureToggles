@@ -7,7 +7,6 @@ using Orc.FeatureToggles;
 /// </summary>
 public static class ModuleInitializer
 {
-    #region Methods
     /// <summary>
     /// Initializes the module.
     /// </summary>
@@ -19,8 +18,7 @@ public static class ModuleInitializer
         serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleInitializationService, FeatureToggleInitializationService>();
         serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleSerializationService, FeatureToggleSerializationService>();
 
-        var languageService = serviceLocator.ResolveType<ILanguageService>();
+        var languageService = serviceLocator.ResolveRequiredType<ILanguageService>();
         languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.FeatureToggles", "Orc.FeatureToggles.Properties", "Resources"));
     }
-    #endregion
 }

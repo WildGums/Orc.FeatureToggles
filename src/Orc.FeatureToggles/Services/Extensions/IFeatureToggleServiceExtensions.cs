@@ -1,17 +1,26 @@
 ﻿namespace Orc.FeatureToggles
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using Catel;
 
     public static class IFeatureToggleServiceExtensions
     {
+        public static FeatureToggle GetRequiredToggle(this IFeatureToggleService service, string name)
+        {
+            ArgumentNullException.ThrowIfNull(service);
+
+            var toggle = service.GetToggle(name);
+            if (toggle is null)
+            {
+                throw new InvalidOperationException($"Could not find required toggle '{name}'");
+            }
+
+            return toggle;
+        }
+
         public static bool GetValue(this IFeatureToggleService service, string name, bool fallbackValue)
         {
-            Argument.IsNotNull(() => service);
+            ArgumentNullException.ThrowIfNull(service);
 
             var toggle = service.GetToggle(name);
             if (toggle is null)
@@ -24,7 +33,7 @@
 
         public static bool RemoveToggle(this IFeatureToggleService service, string name)
         {
-            Argument.IsNotNull(() => service);
+            ArgumentNullException.ThrowIfNull(service);
 
             var toggle = service.GetToggle(name);
             if (toggle is null)
@@ -37,7 +46,7 @@
 
         public static bool Toggle(this IFeatureToggleService service, string name)
         {
-            Argument.IsNotNull(() => service);
+            ArgumentNullException.ThrowIfNull(service);
 
             var toggle = service.GetToggle(name);
             if (toggle is null)
@@ -51,7 +60,7 @@
 
         public static async Task InitializeAndLoadAsync(this IFeatureToggleService service)
         {
-            Argument.IsNotNull(() => service);
+            ArgumentNullException.ThrowIfNull(service);
 
             await service.InitializeAsync();
             await service.LoadAsync();

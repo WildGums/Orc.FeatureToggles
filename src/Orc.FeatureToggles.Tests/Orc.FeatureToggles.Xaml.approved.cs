@@ -12,12 +12,12 @@ namespace Orc.FeatureToggles.ViewModels
 {
     public class ManageFeatureTogglesViewModel : Catel.MVVM.ViewModelBase
     {
-        public static readonly Catel.Data.PropertyData SelectedToggleProperty;
-        public static readonly Catel.Data.PropertyData ToggleFilterProperty;
-        public static readonly Catel.Data.PropertyData TogglesProperty;
+        public static readonly Catel.Data.IPropertyData SelectedToggleProperty;
+        public static readonly Catel.Data.IPropertyData ToggleFilterProperty;
+        public static readonly Catel.Data.IPropertyData TogglesProperty;
         public ManageFeatureTogglesViewModel(Orc.FeatureToggles.IFeatureToggleService featureToggleService, Catel.MVVM.ICommandManager commandManager, Catel.Services.ILanguageService languageService, Catel.Services.IMessageService messageService) { }
         public Catel.MVVM.Command Reset { get; }
-        public Orc.FeatureToggles.FeatureToggle SelectedToggle { get; set; }
+        public Orc.FeatureToggles.FeatureToggle? SelectedToggle { get; set; }
         public override string Title { get; }
         public Catel.MVVM.Command Toggle { get; }
         public string ToggleFilter { get; set; }
@@ -36,7 +36,7 @@ namespace Orc.FeatureToggles.Views
     public class ManageFeatureTogglesWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
     {
         public ManageFeatureTogglesWindow() { }
-        public ManageFeatureTogglesWindow(Orc.FeatureToggles.ViewModels.ManageFeatureTogglesViewModel viewModel) { }
+        public ManageFeatureTogglesWindow(Orc.FeatureToggles.ViewModels.ManageFeatureTogglesViewModel? viewModel) { }
         public void InitializeComponent() { }
     }
 }

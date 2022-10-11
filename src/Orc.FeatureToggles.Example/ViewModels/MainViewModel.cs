@@ -17,7 +17,7 @@
         #region Constructors
         public MainViewModel(IFeatureToggleService featureToggleService)
         {
-            Argument.IsNotNull(() => featureToggleService);
+            ArgumentNullException.ThrowIfNull(featureToggleService);
 
             _featureToggleService = featureToggleService;
 
