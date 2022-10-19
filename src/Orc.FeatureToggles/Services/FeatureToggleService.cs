@@ -1,15 +1,11 @@
 ﻿namespace Orc.FeatureToggles
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using Catel;
-    using Catel.IoC;
     using Catel.Logging;
-    using Catel.Threading;
     using MethodTimer;
 
     public class FeatureToggleService : IFeatureToggleService
@@ -20,6 +16,8 @@
         private readonly IFeatureToggleSerializationService _featureToggleSerializationService;
 
         private readonly Dictionary<string, FeatureToggle> _featureToggles = new Dictionary<string, FeatureToggle>(StringComparer.OrdinalIgnoreCase);
+
+        private bool _isLoading;
 
         public FeatureToggleService(IFeatureToggleInitializationService featureToggleInitializationService,
             IFeatureToggleSerializationService featureToggleSerializationService)
@@ -113,31 +111,45 @@
         [Time]
         public async Task LoadAsync()
         {
-            Log.Debug("Loading feature toggle values");
-
-            var toggleValues = await _featureToggleSerializationService.LoadAsync();
-            var count = 0;
-
-            foreach (var toggleValue in toggleValues)
+            try
             {
-                var toggle = GetToggle(toggleValue.Name);
-                if (toggle is not null)
+                _isLoading = true;
+
+                Log.Debug("Loading feature toggle values");
+
+                var toggleValues = await _featureToggleSerializationService.LoadAsync();
+                var count = 0;
+
+                foreach (var toggleValue in toggleValues)
                 {
-                    Log.Debug($"  * {toggle.Name} => {toggleValue.Value}");
+                    var toggle = GetToggle(toggleValue.Name);
+                    if (toggle is not null)
+                    {
+                        Log.Debug($"  * {toggle.Name} => {toggleValue.Value}");
 
-                    toggle.Value = toggleValue.Value;
-                    count++;
+                        toggle.Value = toggleValue.Value;
+                        count++;
+                    }
                 }
+
+                Loaded?.Invoke(this, EventArgs.Empty);
+
+                Log.Debug($"Loaded '{count}' feature toggle values");
             }
-
-            Loaded?.Invoke(this, EventArgs.Empty);
-
-            Log.Debug($"Loaded '{count}' feature toggle values");
+            finally
+            {
+                _isLoading = false;
+            }
         }
 
         [Time]
         public async Task SaveAsync()
         {
+            if (_isLoading)
+            {
+                return;
+            }
+
             Log.Debug("Saving feature toggle values");
 
             await _featureToggleSerializationService.SaveAsync(_featureToggles.Values.Select(x => new FeatureToggleValue(x)).ToList());
