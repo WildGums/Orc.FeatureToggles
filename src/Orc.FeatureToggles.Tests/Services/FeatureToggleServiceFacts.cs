@@ -16,7 +16,7 @@
                 featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
                     .Returns(async () =>
                     {
-                        return new List<FeatureToggleValue>();
+                        return new FeatureToggleValue[] { };
                     });
             }
 
@@ -76,7 +76,7 @@
                 featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
                     .Returns(async () =>
                     {
-                        return new List<FeatureToggleValue>
+                        return new FeatureToggleValue[]
                         {
                             new FeatureToggleValue
                             {
@@ -86,8 +86,8 @@
                         };
                     });
 
-                featureToggleSerializationServiceMock.Setup(x => x.SaveAsync(It.IsAny<List<FeatureToggleValue>>()))
-                    .Callback<List<FeatureToggleValue>>(x =>
+                featureToggleSerializationServiceMock.Setup(x => x.SaveAsync(It.IsAny<IEnumerable<FeatureToggleValue>>()))
+                    .Callback<IEnumerable<FeatureToggleValue>>(x =>
                     {
                         calledSave = true;
                     });
