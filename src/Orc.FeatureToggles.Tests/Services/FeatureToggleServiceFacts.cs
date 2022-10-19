@@ -1,19 +1,27 @@
 ﻿namespace Orc.FeatureToggles.Tests.Services
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Catel.IoC;
+    using Moq;
     using NUnit.Framework;
 
     public class FeatureToggleServiceFacts
     {
-        private static IFeatureToggleService CreateService()
+        private static IFeatureToggleService CreateService(Mock<IFeatureToggleSerializationService> featureToggleSerializationServiceMock = null)
         {
-            return new FeatureToggleService(new FeatureToggleInitializationService(TypeFactory.Default), 
-                new EmptyFeatureToggleSerializationService());
+            if (featureToggleSerializationServiceMock is null)
+            {
+                featureToggleSerializationServiceMock = new Mock<IFeatureToggleSerializationService>();
+                featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
+                    .Returns(async () =>
+                    {
+                        return new List<FeatureToggleValue>();
+                    });
+            }
+
+            return new FeatureToggleService(new FeatureToggleInitializationService(TypeFactory.Default),
+                featureToggleSerializationServiceMock.Object);
         }
 
         [TestFixture]
@@ -47,6 +55,52 @@
         [TestFixture]
         public class TheLoadAsyncMethod
         {
+            [TestCase]
+            public async Task Should_Not_Save_During_Load_Async()
+            {
+                var toggle1 = new FeatureToggle
+                {
+                    Name = "My toggle 1",
+                    Value = false
+                };
+
+                var toggle2 = new FeatureToggle
+                {
+                    Name = "My toggle 2",
+                    Value = false
+                };
+
+                var calledSave = false;
+
+                var featureToggleSerializationServiceMock = new Mock<IFeatureToggleSerializationService>();
+                featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
+                    .Returns(async () =>
+                    {
+                        return new List<FeatureToggleValue>
+                        {
+                            new FeatureToggleValue
+                            {
+                                Name = "My toggle 1",
+                                Value = true
+                            }
+                        };
+                    });
+
+                featureToggleSerializationServiceMock.Setup(x => x.SaveAsync(It.IsAny<List<FeatureToggleValue>>()))
+                    .Callback<List<FeatureToggleValue>>(x =>
+                    {
+                        calledSave = true;
+                    });
+
+                var service = CreateService(featureToggleSerializationServiceMock);
+                service.AddToggle(toggle1);
+                service.AddToggle(toggle2);
+
+                await service.InitializeAndLoadAsync();
+
+                Assert.IsFalse(calledSave);
+            }
+
             [TestCase]
             public async Task RaisedLoadedEventAsync()
             {
