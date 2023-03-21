@@ -1,17 +1,17 @@
-﻿namespace Orc.FeatureToggles.Example.FeatureToggles.Providers
+﻿namespace Orc.FeatureToggles.Example.FeatureToggles.Providers;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public class ExampleFeatureToggleProvider : IFeatureToggleProvider
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    public class ExampleFeatureToggleProvider : IFeatureToggleProvider
+    public async Task<IEnumerable<FeatureToggle>> ProvideTogglesAsync()
     {
-        public async Task<IEnumerable<FeatureToggle>> ProvideTogglesAsync()
+        var toggles = new List<FeatureToggle>
         {
-            var toggles = new List<FeatureToggle>();
+            new SuperCoolFeatureToggle()
+        };
 
-            toggles.Add(new SuperCoolFeatureToggle());
-
-            return toggles;
-        }
+        return toggles;
     }
 }

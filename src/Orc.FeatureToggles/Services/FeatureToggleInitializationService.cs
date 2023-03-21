@@ -1,58 +1,57 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc.FeatureToggles;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Catel.IoC;
+using Catel.Logging;
+using Catel.Reflection;
+using MethodTimer;
+
+public class FeatureToggleInitializationService : IFeatureToggleInitializationService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Catel.IoC;
-    using Catel.Logging;
-    using Catel.Reflection;
-    using MethodTimer;
+    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-    public class FeatureToggleInitializationService : IFeatureToggleInitializationService
+    private readonly ITypeFactory _typeFactory;
+
+    public FeatureToggleInitializationService(ITypeFactory typeFactory)
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        ArgumentNullException.ThrowIfNull(typeFactory);
 
-        private readonly ITypeFactory _typeFactory;
+        _typeFactory = typeFactory;
+    }
 
-        public FeatureToggleInitializationService(ITypeFactory typeFactory)
+    [Time]
+    public async Task<FeatureToggle[]> FindTogglesAsync()
+    {
+        var toggles = new List<FeatureToggle>();
+
+        Log.Debug("Searching feature toggles");
+
+        var providers = TypeCache.GetTypesImplementingInterface(typeof(IFeatureToggleProvider));
+
+        foreach (var providerType in providers)
         {
-            ArgumentNullException.ThrowIfNull(typeFactory);
+            Log.Debug($"Using provider '{providerType.Name}' to find toggles");
 
-            _typeFactory = typeFactory;
-        }
-
-        [Time]
-        public async Task<FeatureToggle[]> FindTogglesAsync()
-        {
-            var toggles = new List<FeatureToggle>();
-
-            Log.Debug("Searching feature toggles");
-
-            var providers = TypeCache.GetTypesImplementingInterface(typeof(IFeatureToggleProvider));
-
-            foreach (var providerType in providers)
+            try
             {
-                Log.Debug($"Using provider '{providerType.Name}' to find toggles");
+                var provider = (IFeatureToggleProvider)_typeFactory.CreateRequiredInstance(providerType);
+                var providerToggles = await provider.ProvideTogglesAsync();
 
-                try
-                {
-                    var provider = (IFeatureToggleProvider)_typeFactory.CreateRequiredInstance(providerType);
-                    var providerToggles = await provider.ProvideTogglesAsync();
+                Log.Debug($"Found '{providerToggles.Count()}' feature toggles using provider '{providerType.Name}'");
 
-                    Log.Debug($"Found '{providerToggles.Count()}' feature toggles using provider '{providerType.Name}'");
-
-                    toggles.AddRange(providerToggles);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, $"Failed to retrieve feature toggles from provider '{providerType.Name}'");
-                }
+                toggles.AddRange(providerToggles);
             }
-
-            Log.Debug($"Found '{toggles.Count}' feature toggles");
-
-            return toggles.ToArray();
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Failed to retrieve feature toggles from provider '{providerType.Name}'");
+            }
         }
+
+        Log.Debug($"Found '{toggles.Count}' feature toggles");
+
+        return toggles.ToArray();
     }
 }

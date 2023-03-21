@@ -1,10 +1,9 @@
-﻿namespace Orc.FeatureToggles.Example.Views
+﻿namespace Orc.FeatureToggles.Example.Views;
+
+public partial class RibbonView
 {
-    public partial class RibbonView
+    public RibbonView()
     {
-        public RibbonView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
