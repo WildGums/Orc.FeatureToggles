@@ -1,49 +1,38 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ApplicationInitializationService.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.FeatureToggles.Example.Services;
 
+using System;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using Catel.IoC;
+using Orchestra.Services;
 
-namespace Orc.FeatureToggles.Example.Services
+public class ApplicationInitializationService : ApplicationInitializationServiceBase
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Windows.Media;
-    using Catel;
-    using Catel.IoC;
-    using Catel.Threading;
-    using Orchestra.Markup;
-    using Orchestra.Services;
+    private readonly IServiceLocator _serviceLocator;
 
-    public class ApplicationInitializationService : ApplicationInitializationServiceBase
+    public ApplicationInitializationService(IServiceLocator serviceLocator)
     {
-        private readonly IServiceLocator _serviceLocator;
+        ArgumentNullException.ThrowIfNull(serviceLocator);
 
-        public ApplicationInitializationService(IServiceLocator serviceLocator)
-        {
-            ArgumentNullException.ThrowIfNull(serviceLocator);
+        _serviceLocator = serviceLocator;
+    }
 
-            _serviceLocator = serviceLocator;
-        }
+    public override async Task InitializeBeforeCreatingShellAsync()
+    {
+        InitializeFonts();
 
-        public override async Task InitializeBeforeCreatingShellAsync()
-        {
-            InitializeFonts();
+        await InitializeFeatureTogglesAsync();
+    }
 
-            await InitializeFeatureTogglesAsync();
-        }
+    private void InitializeFonts()
+    {
+        Orc.Theming.FontImage.DefaultBrush = new SolidColorBrush(Color.FromArgb(255, 87, 87, 87));
+    }
 
-        private void InitializeFonts()
-        {
-            Orc.Theming.FontImage.DefaultBrush = new SolidColorBrush(Color.FromArgb(255, 87, 87, 87));
-        }
+    private async Task InitializeFeatureTogglesAsync()
+    {
+        var featureToggleService = _serviceLocator.ResolveType<IFeatureToggleService>();
 
-        private async Task InitializeFeatureTogglesAsync()
-        {
-            var featureToggleService = _serviceLocator.ResolveType<IFeatureToggleService>();
-
-            await featureToggleService.InitializeAndLoadAsync();
-        }
+        await featureToggleService.InitializeAndLoadAsync();
     }
 }

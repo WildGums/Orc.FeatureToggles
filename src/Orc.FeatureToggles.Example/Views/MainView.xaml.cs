@@ -1,10 +1,9 @@
-﻿namespace Orc.FeatureToggles.Example.Views
+﻿namespace Orc.FeatureToggles.Example.Views;
+
+public partial class MainView
 {
-    public partial class MainView
+    public MainView()
     {
-        public MainView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

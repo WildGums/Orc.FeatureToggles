@@ -8,7 +8,6 @@ using Orc.FeatureToggles.Views;
 /// </summary>
 public static class ModuleInitializer
 {
-    #region Methods
     /// <summary>
     /// Initializes the module.
     /// </summary>
@@ -23,5 +22,4 @@ public static class ModuleInitializer
         var uiVisualizerService = serviceLocator.ResolveRequiredType<IUIVisualizerService>();
         uiVisualizerService.Register<ManageFeatureTogglesViewModel, ManageFeatureTogglesWindow>(false);
     }
-    #endregion
 }

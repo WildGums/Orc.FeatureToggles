@@ -2,7 +2,12 @@
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:catel="http://schemas.catelproject.com" 
-                   xmlns:xamlbehaviors="http://schemas.microsoft.com/xaml/behaviors">
+                   xmlns:xamlbehaviors="http://schemas.microsoft.com/xaml/behaviors"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:viewModels="clr-namespace:Orc.FeatureToggles.ViewModels"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   mc:Ignorable="d"
+                   d:DataContext="{d:DesignInstance viewModels:ManageFeatureTogglesViewModel}">
 
     <Grid>
         <Grid.RowDefinitions>

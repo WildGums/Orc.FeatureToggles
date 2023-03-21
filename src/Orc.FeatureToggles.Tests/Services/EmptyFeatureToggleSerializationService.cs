@@ -1,19 +1,18 @@
-﻿namespace Orc.FeatureToggles.Tests.Services
+﻿namespace Orc.FeatureToggles.Tests.Services;
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public class EmptyFeatureToggleSerializationService : IFeatureToggleSerializationService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    public class EmptyFeatureToggleSerializationService : IFeatureToggleSerializationService
+    public async Task<FeatureToggleValue[]> LoadAsync()
     {
-        public async Task<FeatureToggleValue[]> LoadAsync()
-        {
-            return Array.Empty<FeatureToggleValue>();
-        }
+        return Array.Empty<FeatureToggleValue>();
+    }
 
-        public async Task SaveAsync(IEnumerable<FeatureToggleValue> toggleValues)
-        {
+    public async Task SaveAsync(IEnumerable<FeatureToggleValue> toggleValues)
+    {
             
-        }
     }
 }
