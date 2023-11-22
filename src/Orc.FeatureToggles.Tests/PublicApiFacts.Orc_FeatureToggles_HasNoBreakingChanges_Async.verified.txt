@@ -70,7 +70,7 @@ namespace Orc.FeatureToggles
     }
     public interface IFeatureToggleProvider
     {
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggle>> ProvideTogglesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggle>> ProvideTogglesAsync();
     }
     public interface IFeatureToggleSerializationService
     {
