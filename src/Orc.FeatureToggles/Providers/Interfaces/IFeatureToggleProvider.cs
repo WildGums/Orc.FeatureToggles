@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 public interface IFeatureToggleProvider
 {
-    Task<IEnumerable<FeatureToggle>> ProvideTogglesAsync(); 
+    Task<IReadOnlyList<FeatureToggle>> ProvideTogglesAsync(); 
 }

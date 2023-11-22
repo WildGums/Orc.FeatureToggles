@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public class ExampleFeatureToggleProvider : IFeatureToggleProvider
 {
-    public async Task<IEnumerable<FeatureToggle>> ProvideTogglesAsync()
+    public async Task<IReadOnlyList<FeatureToggle>> ProvideTogglesAsync()
     {
         var toggles = new List<FeatureToggle>
         {
