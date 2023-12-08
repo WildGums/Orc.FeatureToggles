@@ -51,7 +51,7 @@ public class FeatureToggleServiceFacts
 
             service.Toggle("My toggle");
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
         }
     }
 
@@ -101,7 +101,7 @@ public class FeatureToggleServiceFacts
 
             await service.InitializeAndLoadAsync();
 
-            Assert.IsFalse(calledSave);
+            Assert.That(calledSave, Is.False);
         }
 
         [TestCase]
@@ -118,7 +118,7 @@ public class FeatureToggleServiceFacts
 
             await service.LoadAsync();
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
         }
     }
 
@@ -139,7 +139,7 @@ public class FeatureToggleServiceFacts
 
             await service.SaveAsync();
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
         }
     }
 
@@ -164,7 +164,7 @@ public class FeatureToggleServiceFacts
 
             service.AddToggle(toggle);
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
         }
     }
 
@@ -183,7 +183,7 @@ public class FeatureToggleServiceFacts
 
             service.AddToggle(toggle);
 
-            Assert.IsTrue(service.RemoveToggle("My toggle"));
+            Assert.That(service.RemoveToggle("My toggle"), Is.True);
         }
 
         [TestCase]
@@ -198,7 +198,7 @@ public class FeatureToggleServiceFacts
 
             service.AddToggle(toggle);
 
-            Assert.IsFalse(service.RemoveToggle("non existing toggle"));
+            Assert.That(service.RemoveToggle("non existing toggle"), Is.False);
         }
 
         [TestCase]
@@ -222,7 +222,7 @@ public class FeatureToggleServiceFacts
 
             service.RemoveToggle(toggle);
 
-            Assert.IsTrue(success);
+            Assert.That(success, Is.True);
         }
     }
 }
