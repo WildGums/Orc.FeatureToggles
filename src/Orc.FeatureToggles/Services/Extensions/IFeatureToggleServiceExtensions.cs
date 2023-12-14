@@ -1,60 +1,58 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc.FeatureToggles;
+
+using System;
+using System.Threading.Tasks;
+
+public static class IFeatureToggleServiceExtensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Catel;
-
-    public static class IFeatureToggleServiceExtensions
+    public static FeatureToggle GetRequiredToggle(this IFeatureToggleService service, string name)
     {
-        public static bool GetValue(this IFeatureToggleService service, string name, bool fallbackValue)
+        ArgumentNullException.ThrowIfNull(service);
+
+        var toggle = service.GetToggle(name);
+        if (toggle is null)
         {
-            Argument.IsNotNull(() => service);
-
-            var toggle = service.GetToggle(name);
-            if (toggle is null)
-            {
-                return fallbackValue;
-            }
-
-            return toggle.EffectiveValue;
+            throw new InvalidOperationException($"Could not find required toggle '{name}'");
         }
 
-        public static bool RemoveToggle(this IFeatureToggleService service, string name)
+        return toggle;
+    }
+
+    public static bool GetValue(this IFeatureToggleService service, string name, bool fallbackValue)
+    {
+        ArgumentNullException.ThrowIfNull(service);
+
+        var toggle = service.GetToggle(name);
+        return toggle?.EffectiveValue ?? fallbackValue;
+    }
+
+    public static bool RemoveToggle(this IFeatureToggleService service, string name)
+    {
+        ArgumentNullException.ThrowIfNull(service);
+
+        var toggle = service.GetToggle(name);
+        return toggle is not null && service.RemoveToggle(toggle);
+    }
+
+    public static bool Toggle(this IFeatureToggleService service, string name)
+    {
+        ArgumentNullException.ThrowIfNull(service);
+
+        var toggle = service.GetToggle(name);
+        if (toggle is null)
         {
-            Argument.IsNotNull(() => service);
-
-            var toggle = service.GetToggle(name);
-            if (toggle is null)
-            {
-                return false;
-            }
-
-            return service.RemoveToggle(toggle);
+            return false;
         }
 
-        public static bool Toggle(this IFeatureToggleService service, string name)
-        {
-            Argument.IsNotNull(() => service);
+        toggle.Toggle();
+        return true;
+    }
 
-            var toggle = service.GetToggle(name);
-            if (toggle is null)
-            {
-                return false;
-            }
+    public static async Task InitializeAndLoadAsync(this IFeatureToggleService service)
+    {
+        ArgumentNullException.ThrowIfNull(service);
 
-            toggle.Toggle();
-            return true;
-        }
-
-        public static async Task InitializeAndLoadAsync(this IFeatureToggleService service)
-        {
-            Argument.IsNotNull(() => service);
-
-            await service.InitializeAsync();
-            await service.LoadAsync();
-        }
+        await service.InitializeAsync();
+        await service.LoadAsync();
     }
 }

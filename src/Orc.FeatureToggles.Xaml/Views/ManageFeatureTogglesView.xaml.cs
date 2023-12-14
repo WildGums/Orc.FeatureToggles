@@ -1,10 +1,6 @@
-﻿namespace Orc.FeatureToggles.Views
+﻿namespace Orc.FeatureToggles.Views;
+
+public partial class ManageFeatureTogglesView
 {
-    public partial class ManageFeatureTogglesView
-    {
-        public ManageFeatureTogglesView()
-        {
-            InitializeComponent();
-        }
-    }
+    public ManageFeatureTogglesView() => InitializeComponent();
 }

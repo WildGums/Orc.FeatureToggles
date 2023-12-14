@@ -1,126 +1,114 @@
-﻿namespace Orc.FeatureToggles.ViewModels
+﻿namespace Orc.FeatureToggles.ViewModels;
+
+using Catel.Collections;
+using Catel.MVVM;
+using Catel.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+public class ManageFeatureTogglesViewModel : ViewModelBase
 {
-    using Catel;
-    using Catel.Collections;
-    using Catel.MVVM;
-    using Catel.Services;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+    private readonly IFeatureToggleService _featureToggleService;
+    private readonly ILanguageService _languageService;
 
-    public class ManageFeatureTogglesViewModel : ViewModelBase
+    public ManageFeatureTogglesViewModel(IFeatureToggleService featureToggleService,
+        ILanguageService languageService)
     {
-        private readonly IFeatureToggleService _featureToggleService;
-        private readonly ILanguageService _languageService;
-        private readonly IMessageService _messageService;
+        ArgumentNullException.ThrowIfNull(featureToggleService);
+        ArgumentNullException.ThrowIfNull(languageService);
 
-        public ManageFeatureTogglesViewModel(IFeatureToggleService featureToggleService, ICommandManager commandManager,
-            ILanguageService languageService, IMessageService messageService)
+        _featureToggleService = featureToggleService;
+        _languageService = languageService;
+
+        Toggles = new FastObservableCollection<FeatureToggle>();
+        ToggleFilter = string.Empty;
+
+        Reset = new Command(OnResetExecute, OnResetCanExecute);
+        Toggle = new Command(OnToggleExecute, OnToggleCanExecute);
+    }
+
+    public override string Title
+    {
+        get { return _languageService.GetRequiredString("FeatureToggles_ManageFeatureToggles"); }
+    }
+
+    public string ToggleFilter { get; set; }
+
+    public FastObservableCollection<FeatureToggle> Toggles { get; }
+
+    public FeatureToggle? SelectedToggle { get; set; }
+
+    public Command Reset { get; }
+
+    private bool OnResetCanExecute()
+    {
+        return SelectedToggle is not null;
+    }
+
+    private void OnResetExecute()
+    {
+        SelectedToggle?.Reset();
+    }
+
+    public Command Toggle { get; }
+
+    private bool OnToggleCanExecute()
+    {
+        return SelectedToggle is not null;
+    }
+
+    private void OnToggleExecute()
+    {
+        SelectedToggle?.Toggle();
+    }
+        
+    protected override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
+    }
+
+    protected override async Task CloseAsync()
+    {
+        await _featureToggleService.SaveAsync();
+
+        await base.CloseAsync();
+    }
+
+
+    private void UpdateToggles()
+    {
+        var selectedToggle = SelectedToggle;
+        var toggleFilter = ToggleFilter;
+
+        var allToggles = _featureToggleService.GetToggles().OrderBy(x => x).ToList();
+        if (!string.IsNullOrWhiteSpace(toggleFilter))
         {
-            Argument.IsNotNull(() => featureToggleService);
-            Argument.IsNotNull(() => commandManager);
-            Argument.IsNotNull(() => languageService);
-            Argument.IsNotNull(() => messageService);
-
-            _featureToggleService = featureToggleService;
-            _languageService = languageService;
-            _messageService = messageService;
-
-            Toggles = new FastObservableCollection<FeatureToggle>();
-            ToggleFilter = string.Empty;
-
-            Reset = new Command(OnResetExecute, OnResetCanExecute);
-            Toggle = new Command(OnToggleExecute, OnToggleCanExecute);
+            allToggles = allToggles.Where(x => x.Name.IndexOf(toggleFilter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
 
-        #region Properties
-        public override string Title
+        using (Toggles.SuspendChangeNotifications())
         {
-            get { return _languageService.GetString("FeatureToggles_ManageFeatureToggles"); }
-        }
+            Toggles.Clear();
 
-        public string ToggleFilter { get; set; }
-
-        public FastObservableCollection<FeatureToggle> Toggles { get; private set; }
-
-        public FeatureToggle SelectedToggle { get; set; }
-        #endregion
-
-        #region Commands
-        public Command Reset { get; private set; }
-
-        private bool OnResetCanExecute()
-        {
-            return SelectedToggle is not null;
-        }
-
-        private void OnResetExecute()
-        {
-            SelectedToggle.Reset();
-        }
-
-        public Command Toggle { get; private set; }
-
-        private bool OnToggleCanExecute()
-        {
-            return SelectedToggle is not null;
-        }
-
-        private void OnToggleExecute()
-        {
-            SelectedToggle.Toggle();
-        }
-        #endregion
-
-        #region Methods
-        protected override async Task InitializeAsync()
-        {
-            await base.InitializeAsync();
-        }
-
-        protected override async Task CloseAsync()
-        {
-            await _featureToggleService.SaveAsync();
-
-            await base.CloseAsync();
-        }
-
-
-        private void UpdateToggles()
-        {
-            var selectedToggle = SelectedToggle;
-            var toggleFilter = ToggleFilter;
-
-            var allToggles = _featureToggleService.GetToggles().OrderBy(x => x).ToList();
-            if (!string.IsNullOrWhiteSpace(toggleFilter))
+            foreach (var toggle in allToggles)
             {
-                allToggles = allToggles.Where(x => x.Name.IndexOf(toggleFilter, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-            }
-
-            using (Toggles.SuspendChangeNotifications())
-            {
-                Toggles.Clear();
-
-                foreach (var toggle in allToggles)
+                if (!toggle.IsHidden)
                 {
-                    if (!toggle.IsHidden)
-                    {
-                        Toggles.Add(toggle);
-                    }
+                    Toggles.Add(toggle);
                 }
             }
-
-            // restore selection
-            if (selectedToggle is not null && Toggles.Any(x => string.Equals(x.Name, selectedToggle)))
-            {
-                SelectedToggle = selectedToggle;
-            }
         }
 
-        private void OnToggleFilterChanged()
+        // restore selection
+        if (selectedToggle is not null && Toggles.Any(x => string.Equals(x.Name, selectedToggle.Name)))
         {
-            UpdateToggles();
+            SelectedToggle = selectedToggle;
         }
-        #endregion
+    }
+
+    private void OnToggleFilterChanged()
+    {
+        UpdateToggles();
     }
 }

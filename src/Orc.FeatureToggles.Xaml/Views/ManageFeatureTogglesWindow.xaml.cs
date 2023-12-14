@@ -1,19 +1,18 @@
-﻿namespace Orc.FeatureToggles.Views
+﻿namespace Orc.FeatureToggles.Views;
+
+using Catel.Windows;
+using ViewModels;
+
+public partial class ManageFeatureTogglesWindow : DataWindow
 {
-    using Catel.Windows;
-    using Orc.FeatureToggles.ViewModels;
-
-    public partial class ManageFeatureTogglesWindow : DataWindow
+    public ManageFeatureTogglesWindow()
+        : this(null)
     {
-        public ManageFeatureTogglesWindow()
-            : this(null)
-        {
-        }
+    }
 
-        public ManageFeatureTogglesWindow(ManageFeatureTogglesViewModel viewModel)
-            : base(viewModel, DataWindowMode.Close)
-        {
-            InitializeComponent();
-        }
+    public ManageFeatureTogglesWindow(ManageFeatureTogglesViewModel? viewModel)
+        : base(viewModel, DataWindowMode.Close)
+    {
+        InitializeComponent();
     }
 }

@@ -1,34 +1,28 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc.FeatureToggles;
+
+using System;
+
+public static class FeatureToggleExtensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Catel;
-
-    public static class FeatureToggleExtensions
+    public static void Reset(this FeatureToggle toggle)
     {
-        public static void Reset(this FeatureToggle toggle)
-        {
-            Argument.IsNotNull(() => toggle);
+        ArgumentNullException.ThrowIfNull(toggle);
 
-            toggle.Value = null;
+        toggle.Value = null;
+    }
+
+    public static void Toggle(this FeatureToggle toggle)
+    {
+        ArgumentNullException.ThrowIfNull(toggle);
+
+        if (!toggle.Value.HasValue)
+        {
+            // Was using default value, so switch to non-default
+            toggle.Value = !toggle.DefaultValue;
         }
-
-        public static void Toggle(this FeatureToggle toggle)
+        else
         {
-            Argument.IsNotNull(() => toggle);
-
-            if (!toggle.Value.HasValue)
-            {
-                // Was using default value, so siwtch to non-default
-                toggle.Value = !toggle.DefaultValue;
-            }
-            else
-            {
-                toggle.Value = !toggle.Value;
-            }
+            toggle.Value = !toggle.Value;
         }
     }
 }

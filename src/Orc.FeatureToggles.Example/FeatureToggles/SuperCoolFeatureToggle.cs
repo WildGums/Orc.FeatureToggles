@@ -1,17 +1,12 @@
-﻿namespace Orc.FeatureToggles.Example.FeatureToggles
+﻿namespace Orc.FeatureToggles.Example.FeatureToggles;
+
+public class SuperCoolFeatureToggle : FeatureToggle
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    public new const string Name = "Super cool feature";
 
-    public class SuperCoolFeatureToggle : FeatureToggle
+    public SuperCoolFeatureToggle()
     {
-        public new const string Name = "Super cool feature";
-
-        public SuperCoolFeatureToggle()
-        {
-            base.Name = Name;
-            Description = "When this feature toggle is enabled, it will show SUPER COOL FEATURE in the status bar";
-        }
+        base.Name = Name;
+        Description = "When this feature toggle is enabled, it will show SUPER COOL FEATURE in the status bar";
     }
 }

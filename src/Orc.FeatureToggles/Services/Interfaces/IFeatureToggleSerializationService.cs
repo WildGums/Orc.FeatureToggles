@@ -1,12 +1,10 @@
-﻿namespace Orc.FeatureToggles
-{
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Threading.Tasks;
+﻿namespace Orc.FeatureToggles;
 
-    public interface IFeatureToggleSerializationService
-    {
-        Task<List<FeatureToggleValue>> LoadAsync();
-        Task SaveAsync(List<FeatureToggleValue> toggleValues);
-    }
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public interface IFeatureToggleSerializationService
+{
+    Task<FeatureToggleValue[]> LoadAsync();
+    Task SaveAsync(IEnumerable<FeatureToggleValue> toggleValues);
 }

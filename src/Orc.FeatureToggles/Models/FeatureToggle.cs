@@ -1,69 +1,76 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc.FeatureToggles;
+
+using System;
+using Catel.Data;
+
+public class FeatureToggle : ObservableObject, IComparable<FeatureToggle>, IComparable
 {
-    using System;
-    using Catel.Data;
+    private bool? _value;
 
-    public class FeatureToggle : ObservableObject, IComparable<FeatureToggle>, IComparable
+    public FeatureToggle()
     {
-        private bool? _value;
+        Name = string.Empty;
+        Description = string.Empty;
+    }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public string Description { get; set; }
+    public string Description { get; set; }
 
-        public bool IsHidden { get; set; }
+    public bool IsHidden { get; set; }
 
-        public bool? Value
+    public bool? Value
+    {
+        get => _value;
+        set
         {
-            get => _value;
-            set
+            // Note: this way we keep the value null in case it matches the default
+            var currentValue = Value;
+            if (currentValue != value)
             {
-                // Note: this way we keep the value null in case it matches the default
-                var currentValue = Value;
-                if (currentValue != value)
-                {
-                    _value = value;
-                    RaiseToggled(currentValue, value);
-                    RaisePropertyChanged(nameof(Value));
-                }
+                _value = value;
+                RaiseToggled(currentValue, value);
+                RaisePropertyChanged(nameof(Value));
             }
         }
+    }
 
-        public bool EffectiveValue
+    public bool EffectiveValue
+    {
+        get { return Value ?? DefaultValue; }
+    }
+
+    public bool DefaultValue { get; set; }
+
+    public event EventHandler<ToggledEventArgs>? Toggled;
+
+    protected void RaiseToggled(bool? oldValue, bool? newValue)
+    {
+        Toggled?.Invoke(this, new ToggledEventArgs(this, oldValue, newValue));
+    }
+
+    public int CompareTo(FeatureToggle? other)
+    {
+        if (other is null)
         {
-            get { return Value ?? DefaultValue; }
-        }
-
-        public bool DefaultValue { get; set; }
-
-        public event EventHandler<ToggledEventArgs> Toggled;
-
-        protected void RaiseToggled(bool? oldValue, bool? newValue)
-        {
-            Toggled?.Invoke(this, new ToggledEventArgs(this, oldValue, newValue));
-        }
-
-        public int CompareTo(FeatureToggle other)
-        {
-            if (Name is null)
-            {
-                return -1;
-            }
-            return Name.CompareTo(other.Name);
-        }
-
-        public int CompareTo(object obj)
-        {
-            if (obj is FeatureToggle toggle)
-            {
-                return CompareTo(toggle);
-            }
             return -1;
         }
 
-        public override string ToString()
+        return Name.CompareTo(other.Name);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is FeatureToggle toggle)
         {
-            return $"{Name} ({Value})";
+            return CompareTo(toggle);
         }
+
+        return -1;
+    }
+
+    public override string ToString()
+    {
+        return $"{Name} ({Value})";
     }
 }

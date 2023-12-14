@@ -1,26 +1,21 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc.FeatureToggles;
+
+using System;
+using Catel;
+
+public class ToggleEventArgs : EventArgs
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Catel;
-
-    public class ToggleEventArgs : EventArgs
+    public ToggleEventArgs(FeatureToggle toggle)
     {
-        public ToggleEventArgs(FeatureToggle toggle)
-        {
-            Argument.IsNotNull(() => toggle);
+        ArgumentNullException.ThrowIfNull(toggle);
 
-            Toggle = toggle;
-        }
+        Toggle = toggle;
+    }
 
-        public FeatureToggle Toggle { get; }
+    public FeatureToggle Toggle { get; }
 
-        public bool IsToggle(string name)
-        {
-            return Toggle.Name.EqualsIgnoreCase(name);
-        }
+    public bool IsToggle(string name)
+    {
+        return Toggle.Name.EqualsIgnoreCase(name);
     }
 }

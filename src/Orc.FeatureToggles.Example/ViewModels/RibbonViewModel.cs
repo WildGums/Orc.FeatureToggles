@@ -1,44 +1,36 @@
-﻿namespace Orc.FeatureToggles.Example.ViewModels
+﻿namespace Orc.FeatureToggles.Example.ViewModels;
+
+using System;
+using System.Threading.Tasks;
+using Catel.Logging;
+using Catel.MVVM;
+using Catel.Services;
+using Orc.FeatureToggles.ViewModels;
+
+public class RibbonViewModel : ViewModelBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.Collections;
-    using Catel.Logging;
-    using Catel.MVVM;
-    using Catel.Reflection;
-    using Catel.Services;
-    using Orc.FeatureToggles.ViewModels;
+    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-    public class RibbonViewModel : ViewModelBase
+    private readonly IUIVisualizerService _uiVisualizerService;
+    private readonly IFeatureToggleService _featureToggleService;
+
+    public RibbonViewModel(IFeatureToggleService featureToggleService, IUIVisualizerService uiVisualizerService)
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        ArgumentNullException.ThrowIfNull(featureToggleService);
+        ArgumentNullException.ThrowIfNull(uiVisualizerService);
 
-        private readonly IUIVisualizerService _uiVisualizerService;
-        private readonly IFeatureToggleService _featureToggleService;
+        _featureToggleService = featureToggleService;
+        _uiVisualizerService = uiVisualizerService;
 
-        public RibbonViewModel(IFeatureToggleService featureToggleservice, IUIVisualizerService uiVisualizerService)
-        {
-            Argument.IsNotNull(() => featureToggleservice);
-            Argument.IsNotNull(() => uiVisualizerService);
-
-            _featureToggleService = featureToggleservice;
-            _uiVisualizerService = uiVisualizerService;
-
-            ManageFeatureToggles = new TaskCommand(OnManageFeatureTogglesExecuteAsync);
-        }
-
-        #region Commands
-        public TaskCommand ManageFeatureToggles { get; private set; }
-
-        private async Task OnManageFeatureTogglesExecuteAsync()
-        {
-            await _uiVisualizerService.ShowDialogAsync<ManageFeatureTogglesViewModel>();
-        }
-        #endregion
+        ManageFeatureToggles = new TaskCommand(OnManageFeatureTogglesExecuteAsync);
     }
+
+    #region Commands
+    public TaskCommand ManageFeatureToggles { get; private set; }
+
+    private async Task OnManageFeatureTogglesExecuteAsync()
+    {
+        await _uiVisualizerService.ShowDialogAsync<ManageFeatureTogglesViewModel>();
+    }
+    #endregion
 }
