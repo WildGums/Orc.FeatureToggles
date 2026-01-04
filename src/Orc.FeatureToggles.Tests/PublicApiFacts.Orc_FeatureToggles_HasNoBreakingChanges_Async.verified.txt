@@ -30,19 +30,19 @@ namespace Orc.FeatureToggles
     }
     public class FeatureToggleInitializationService : Orc.FeatureToggles.IFeatureToggleInitializationService
     {
-        public FeatureToggleInitializationService(Catel.IoC.ITypeFactory typeFactory) { }
-        public System.Threading.Tasks.Task<Orc.FeatureToggles.FeatureToggle[]> FindTogglesAsync() { }
+        public FeatureToggleInitializationService(Microsoft.Extensions.Logging.ILogger<Orc.FeatureToggles.FeatureToggleInitializationService> logger, System.Collections.Generic.IEnumerable<Orc.FeatureToggles.IFeatureToggleProvider> featureToggleProviders) { }
+        public System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggle>> FindTogglesAsync() { }
     }
     public class FeatureToggleSerializationService : Orc.FeatureToggles.IFeatureToggleSerializationService
     {
-        public FeatureToggleSerializationService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Runtime.Serialization.Xml.IXmlSerializer xmlSerializer, Catel.Services.IAppDataService appDataService) { }
+        public FeatureToggleSerializationService(Microsoft.Extensions.Logging.ILogger<Orc.FeatureToggles.FeatureToggleSerializationService> logger, Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Services.IAppDataService appDataService, Orc.Serialization.Json.IJsonSerializerFactory jsonSerializerFactory) { }
         protected virtual string GetFileName() { }
-        public System.Threading.Tasks.Task<Orc.FeatureToggles.FeatureToggleValue[]> LoadAsync() { }
-        public System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggleValue> toggleValues) { }
+        public System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggleValue>> LoadAsync() { }
+        public System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggleValue> toggleValues) { }
     }
     public class FeatureToggleService : Orc.FeatureToggles.IFeatureToggleService
     {
-        public FeatureToggleService(Orc.FeatureToggles.IFeatureToggleInitializationService featureToggleInitializationService, Orc.FeatureToggles.IFeatureToggleSerializationService featureToggleSerializationService) { }
+        public FeatureToggleService(Microsoft.Extensions.Logging.ILogger<Orc.FeatureToggles.FeatureToggleSerializationService> logger, Orc.FeatureToggles.IFeatureToggleInitializationService featureToggleInitializationService, Orc.FeatureToggles.IFeatureToggleSerializationService featureToggleSerializationService) { }
         public event System.EventHandler<System.EventArgs>? Loaded;
         public event System.EventHandler<System.EventArgs>? Saved;
         public event System.EventHandler<Orc.FeatureToggles.ToggleEventArgs>? ToggleAdded;
@@ -67,7 +67,7 @@ namespace Orc.FeatureToggles
     }
     public interface IFeatureToggleInitializationService
     {
-        System.Threading.Tasks.Task<Orc.FeatureToggles.FeatureToggle[]> FindTogglesAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggle>> FindTogglesAsync();
     }
     public interface IFeatureToggleProvider
     {
@@ -75,8 +75,8 @@ namespace Orc.FeatureToggles
     }
     public interface IFeatureToggleSerializationService
     {
-        System.Threading.Tasks.Task<Orc.FeatureToggles.FeatureToggleValue[]> LoadAsync();
-        System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.IEnumerable<Orc.FeatureToggles.FeatureToggleValue> toggleValues);
+        System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggleValue>> LoadAsync();
+        System.Threading.Tasks.Task SaveAsync(System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggleValue> toggleValues);
     }
     public interface IFeatureToggleService
     {
@@ -100,6 +100,10 @@ namespace Orc.FeatureToggles
         public static System.Threading.Tasks.Task InitializeAndLoadAsync(this Orc.FeatureToggles.IFeatureToggleService service) { }
         public static bool RemoveToggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
         public static bool Toggle(this Orc.FeatureToggles.IFeatureToggleService service, string name) { }
+    }
+    public static class OrcFeatureTogglesModule
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcFeatureToggles(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
     }
     public class ToggleEventArgs : System.EventArgs
     {

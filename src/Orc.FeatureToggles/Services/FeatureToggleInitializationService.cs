@@ -4,53 +4,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Catel.IoC;
-using Catel.Logging;
-using Catel.Reflection;
 using MethodTimer;
+using Microsoft.Extensions.Logging;
 
 public class FeatureToggleInitializationService : IFeatureToggleInitializationService
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private readonly ILogger<FeatureToggleInitializationService> _logger;
+    private readonly IReadOnlyList<IFeatureToggleProvider> _featureToggleProviders;
 
-    private readonly ITypeFactory _typeFactory;
-
-    public FeatureToggleInitializationService(ITypeFactory typeFactory)
+    public FeatureToggleInitializationService(ILogger<FeatureToggleInitializationService> logger,
+        IEnumerable<IFeatureToggleProvider> featureToggleProviders)
     {
-        ArgumentNullException.ThrowIfNull(typeFactory);
-
-        _typeFactory = typeFactory;
+        _logger = logger;
+        _featureToggleProviders = featureToggleProviders.ToArray();
     }
 
     [Time]
-    public async Task<FeatureToggle[]> FindTogglesAsync()
+    public async Task<IReadOnlyList<FeatureToggle>> FindTogglesAsync()
     {
         var toggles = new List<FeatureToggle>();
 
-        Log.Debug("Searching feature toggles");
+        _logger.LogDebug("Searching feature toggles");
 
-        var providers = TypeCache.GetTypesImplementingInterface(typeof(IFeatureToggleProvider));
-
-        foreach (var providerType in providers)
+        foreach (var featureToggleProvider in _featureToggleProviders)
         {
-            Log.Debug($"Using provider '{providerType.Name}' to find toggles");
-
             try
             {
-                var provider = (IFeatureToggleProvider)_typeFactory.CreateRequiredInstance(providerType);
-                var providerToggles = await provider.ProvideTogglesAsync();
-
-                Log.Debug($"Found '{providerToggles.Count()}' feature toggles using provider '{providerType.Name}'");
+                var providerToggles = await featureToggleProvider.ProvideTogglesAsync();
 
                 toggles.AddRange(providerToggles);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Failed to retrieve feature toggles from provider '{providerType.Name}'");
+                _logger.LogError(ex, $"Failed to retrieve feature toggles from provider '{featureToggleProvider.GetType().Name}'");
             }
         }
 
-        Log.Debug($"Found '{toggles.Count}' feature toggles");
+        _logger.LogDebug($"Found '{toggles.Count}' feature toggles");
 
         return toggles.ToArray();
     }

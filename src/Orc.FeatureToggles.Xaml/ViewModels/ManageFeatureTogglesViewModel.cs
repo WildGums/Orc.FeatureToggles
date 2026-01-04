@@ -11,21 +11,22 @@ public class ManageFeatureTogglesViewModel : ViewModelBase
 {
     private readonly IFeatureToggleService _featureToggleService;
     private readonly ILanguageService _languageService;
+    private readonly IDispatcherService _dispatcherService;
 
-    public ManageFeatureTogglesViewModel(IFeatureToggleService featureToggleService,
-        ILanguageService languageService)
+    public ManageFeatureTogglesViewModel(IServiceProvider serviceProvider, 
+        IFeatureToggleService featureToggleService, ILanguageService languageService,
+        IDispatcherService dispatcherService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(featureToggleService);
-        ArgumentNullException.ThrowIfNull(languageService);
-
         _featureToggleService = featureToggleService;
         _languageService = languageService;
+        _dispatcherService = dispatcherService;
 
-        Toggles = new FastObservableCollection<FeatureToggle>();
+        Toggles = new FastObservableCollection<FeatureToggle>(dispatcherService);
         ToggleFilter = string.Empty;
 
-        Reset = new Command(OnResetExecute, OnResetCanExecute);
-        Toggle = new Command(OnToggleExecute, OnToggleCanExecute);
+        Reset = new Command(serviceProvider, OnResetExecute, OnResetCanExecute);
+        Toggle = new Command(serviceProvider, OnToggleExecute, OnToggleCanExecute);
     }
 
     public override string Title

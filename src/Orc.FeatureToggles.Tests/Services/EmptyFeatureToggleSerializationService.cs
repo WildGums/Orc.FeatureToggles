@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 public class EmptyFeatureToggleSerializationService : IFeatureToggleSerializationService
 {
-    public async Task<FeatureToggleValue[]> LoadAsync()
+    public async Task<IReadOnlyList<FeatureToggleValue>> LoadAsync()
     {
         return Array.Empty<FeatureToggleValue>();
     }
 
-    public async Task SaveAsync(IEnumerable<FeatureToggleValue> toggleValues)
+    public async Task SaveAsync(IReadOnlyList<FeatureToggleValue> toggleValues)
     {
             
     }
