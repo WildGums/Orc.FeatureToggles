@@ -33,7 +33,7 @@ public class FeatureToggleSerializationService : IFeatureToggleSerializationServ
 
     protected virtual string GetFileName()
     {
-        return Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "FeatureToggles.xml");
+        return Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "FeatureToggles.json");
     }
 
     public async Task<IReadOnlyList<FeatureToggleValue>> LoadAsync()
