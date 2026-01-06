@@ -1,10 +1,11 @@
-﻿namespace Orc.FeatureToggles
+﻿namespace Orc
 {
     using Catel.IoC;
     using Catel.Services;
     using Catel.ThirdPartyNotices;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Orc.FeatureToggles;
     using Orc.FeatureToggles.ViewModels;
     using Orc.FeatureToggles.Views;
 
