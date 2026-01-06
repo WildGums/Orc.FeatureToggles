@@ -9,10 +9,9 @@ public class StatusBarViewModel : ViewModelBase
 {
     private readonly IFeatureToggleService _featureToggleService;
 
-    public StatusBarViewModel(IFeatureToggleService featureToggleService)
+    public StatusBarViewModel(IServiceProvider serviceProvider, IFeatureToggleService featureToggleService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(featureToggleService);
-
         _featureToggleService = featureToggleService;
     }
 
