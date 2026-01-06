@@ -8,13 +8,6 @@ public static class ModuleInitializer
 {
     public static void Initialize() { }
 }
-namespace Orc.FeatureToggles
-{
-    public static class OrcFeatureTogglesXamlModule
-    {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcFeatureTogglesXaml(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
-    }
-}
 namespace Orc.FeatureToggles.ViewModels
 {
     public class ManageFeatureTogglesViewModel : Catel.MVVM.ViewModelBase
@@ -49,5 +42,12 @@ namespace Orc.FeatureToggles.Views
         public ManageFeatureTogglesWindow(System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
         public ManageFeatureTogglesWindow(Catel.MVVM.IViewModel? viewModel, System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
         public void InitializeComponent() { }
+    }
+}
+namespace Orc
+{
+    public static class OrcFeatureTogglesXamlModule
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcFeatureTogglesXaml(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
     }
 }
