@@ -1,19 +1,15 @@
 ﻿namespace Orc.FeatureToggles.Example.ViewModels;
 
 using System;
-using Catel.Logging;
 using Catel.MVVM;
 
 public class MainViewModel : ViewModelBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
     private readonly IFeatureToggleService _featureToggleService;
     
-    public MainViewModel(IFeatureToggleService featureToggleService)
+    public MainViewModel(IServiceProvider serviceProvider, IFeatureToggleService featureToggleService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(featureToggleService);
-
         _featureToggleService = featureToggleService;
     }
 

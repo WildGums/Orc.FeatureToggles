@@ -1,7 +1,4 @@
-using System.Runtime.CompilerServices;
-using Catel.IoC;
-using Catel.Services;
-using Orc.FeatureToggles;
+﻿using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Used by the ModuleInit. All code inside the Initialize method is ran as soon as the assembly is loaded.
@@ -14,13 +11,5 @@ public static class ModuleInitializer
     [ModuleInitializer]
     public static void Initialize()
     {
-        var serviceLocator = ServiceLocator.Default;
-
-        serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleService, FeatureToggleService>();
-        serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleInitializationService, FeatureToggleInitializationService>();
-        serviceLocator.RegisterTypeIfNotYetRegistered<IFeatureToggleSerializationService, FeatureToggleSerializationService>();
-
-        var languageService = serviceLocator.ResolveRequiredType<ILanguageService>();
-        languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.FeatureToggles", "Orc.FeatureToggles.Properties", "Resources"));
     }
 }

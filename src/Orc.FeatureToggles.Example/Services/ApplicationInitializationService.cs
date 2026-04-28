@@ -3,18 +3,17 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Catel.IoC;
-using Orchestra.Services;
+using Orchestra;
 
 public class ApplicationInitializationService : ApplicationInitializationServiceBase
 {
-    private readonly IServiceLocator _serviceLocator;
+    private readonly IFeatureToggleService _featureToggleService;
 
-    public ApplicationInitializationService(IServiceLocator serviceLocator)
+    public ApplicationInitializationService(IServiceProvider serviceProvider, 
+        IFeatureToggleService featureToggleService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(serviceLocator);
-
-        _serviceLocator = serviceLocator;
+        _featureToggleService = featureToggleService;
     }
 
     public override async Task InitializeBeforeCreatingShellAsync()
@@ -31,8 +30,6 @@ public class ApplicationInitializationService : ApplicationInitializationService
 
     private async Task InitializeFeatureTogglesAsync()
     {
-        var featureToggleService = _serviceLocator.ResolveType<IFeatureToggleService>();
-
-        await featureToggleService.InitializeAndLoadAsync();
+        await _featureToggleService.InitializeAndLoadAsync();
     }
 }

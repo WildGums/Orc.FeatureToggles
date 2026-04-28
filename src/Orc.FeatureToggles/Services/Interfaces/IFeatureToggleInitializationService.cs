@@ -1,8 +1,9 @@
 ﻿namespace Orc.FeatureToggles;
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public interface IFeatureToggleInitializationService
 {
-    Task<FeatureToggle[]> FindTogglesAsync();
+    Task<IReadOnlyList<FeatureToggle>> FindTogglesAsync();
 }

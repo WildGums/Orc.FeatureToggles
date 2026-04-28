@@ -1,37 +1,19 @@
 ﻿namespace Orc.FeatureToggles.Tests.Services;
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Catel.IoC;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 
 public class FeatureToggleServiceFacts
 {
-    private static IFeatureToggleService CreateService(Mock<IFeatureToggleSerializationService> featureToggleSerializationServiceMock = null)
-    {
-        if (featureToggleSerializationServiceMock is not null)
-        {
-            return new FeatureToggleService(new FeatureToggleInitializationService(TypeFactory.Default),
-                featureToggleSerializationServiceMock.Object);
-        }
-
-        featureToggleSerializationServiceMock = new Mock<IFeatureToggleSerializationService>();
-        featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
-            .Returns(async () =>
-            {
-                return new FeatureToggleValue[] { };
-            });
-
-        return new FeatureToggleService(new FeatureToggleInitializationService(TypeFactory.Default),
-            featureToggleSerializationServiceMock.Object);
-    }
-
     [TestFixture]
-    public class TheToggleMethod
+    public class The_Toggle_Method
     {
         [TestCase]
-        public void RaisesToggledEvent()
+        public void Raises_Toggled_Event()
         {
             var service = CreateService();
 
@@ -56,10 +38,10 @@ public class FeatureToggleServiceFacts
     }
 
     [TestFixture]
-    public class TheLoadAsyncMethod
+    public class The_LoadAsync_Method
     {
         [TestCase]
-        public async Task Should_Not_Save_During_Load_Async()
+        public async Task Should_Not_Save_During_Load()
         {
             var toggle1 = new FeatureToggle
             {
@@ -89,7 +71,7 @@ public class FeatureToggleServiceFacts
                     };
                 });
 
-            featureToggleSerializationServiceMock.Setup(x => x.SaveAsync(It.IsAny<IEnumerable<FeatureToggleValue>>()))
+            featureToggleSerializationServiceMock.Setup(x => x.SaveAsync(It.IsAny<IReadOnlyList<FeatureToggleValue>>()))
                 .Callback<IEnumerable<FeatureToggleValue>>(_ =>
                 {
                     calledSave = true;
@@ -105,7 +87,7 @@ public class FeatureToggleServiceFacts
         }
 
         [TestCase]
-        public async Task RaisedLoadedEventAsync()
+        public async Task Raised_Loaded_Event()
         {
             var service = CreateService();
 
@@ -123,10 +105,10 @@ public class FeatureToggleServiceFacts
     }
 
     [TestFixture]
-    public class TheSaveAsyncMethod
+    public class The_SaveAsync_Method
     {
         [TestCase]
-        public async Task RaisedSavedEventAsync()
+        public async Task Raised_Saved_Event()
         {
             var service = CreateService();
 
@@ -144,10 +126,10 @@ public class FeatureToggleServiceFacts
     }
 
     [TestFixture]
-    public class TheAddToggleMethod
+    public class The_AddToggle_Method
     {
         [TestCase]
-        public void RaisesToggleAddedEvent()
+        public void Raises_ToggleAdded_Event()
         {
             var service = CreateService();
             var success = false;
@@ -169,10 +151,10 @@ public class FeatureToggleServiceFacts
     }
 
     [TestFixture]
-    public class TheRemoveToggleMethod
+    public class The_RemoveToggle_Method
     {
         [TestCase]
-        public void ReturnsTrueForExistingToggle()
+        public void Returns_True_For_Existing_Toggle()
         {
             var service = CreateService();
 
@@ -187,7 +169,7 @@ public class FeatureToggleServiceFacts
         }
 
         [TestCase]
-        public void ReturnsFalseForNonExistingToggle()
+        public void Returns_False_For_Non_Existing_Toggle()
         {
             var service = CreateService();
 
@@ -202,7 +184,7 @@ public class FeatureToggleServiceFacts
         }
 
         [TestCase]
-        public void RaisesToggleRemovedEvent()
+        public void Raises_ToggleRemoved_Event()
         {
             var service = CreateService();
 
@@ -224,5 +206,28 @@ public class FeatureToggleServiceFacts
 
             Assert.That(success, Is.True);
         }
+    }
+
+    private static IFeatureToggleService CreateService(Mock<IFeatureToggleSerializationService> featureToggleSerializationServiceMock = null)
+    {
+        var serviceCollection = ServiceCollectionHelper.CreateServiceCollection();
+
+        if (featureToggleSerializationServiceMock is null)
+        {
+            featureToggleSerializationServiceMock = new Mock<IFeatureToggleSerializationService>();
+            featureToggleSerializationServiceMock.Setup(x => x.LoadAsync())
+                .Returns(async () =>
+                {
+                    return Array.Empty<FeatureToggleValue>();
+                });
+        }
+
+        serviceCollection.AddSingleton<IFeatureToggleSerializationService>(featureToggleSerializationServiceMock.Object);
+
+#pragma warning disable IDISP001 // Dispose created
+        var provider = serviceCollection.BuildServiceProvider();
+#pragma warning restore IDISP001 // Dispose created
+
+        return ActivatorUtilities.CreateInstance<FeatureToggleService>(provider);
     }
 }

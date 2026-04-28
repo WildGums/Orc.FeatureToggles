@@ -1,7 +1,7 @@
 ﻿namespace Orc.FeatureToggles.Example.Services;
 
 using System.Windows;
-using Orchestra.Services;
+using Orchestra;
 using Views;
 
 public class RibbonService : IRibbonService
