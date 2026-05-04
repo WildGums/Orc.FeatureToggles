@@ -42,7 +42,7 @@ public class FeatureToggleSerializationService : IFeatureToggleSerializationServ
 
         var fileName = GetFileName();
 
-        _logger.LogDebug($"Loading feature toggle values from '{fileName}'");
+        _logger.LogDebug("Loading feature toggle values from '{FileName}'", fileName);
 
         if (_fileService.Exists(fileName))
         {
@@ -65,12 +65,12 @@ public class FeatureToggleSerializationService : IFeatureToggleSerializationServ
     {
         var fileName = GetFileName();
 
-        _logger.LogDebug($"Saving feature toggle values to '{fileName}'");
+        _logger.LogDebug("Saving feature toggle values to '{FileName}'", fileName);
 
         var directory = Path.GetDirectoryName(fileName);
         if (directory is null)
         {
-            throw _logger.LogErrorAndCreateException<InvalidOperationException>($"Invalid file name '{fileName}'");
+            throw _logger.LogErrorAndCreateException<InvalidOperationException>("Invalid file name '{FileName}'", fileName);
         }
 
         _directoryService.Create(directory);

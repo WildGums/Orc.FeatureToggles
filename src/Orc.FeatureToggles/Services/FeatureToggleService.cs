@@ -47,7 +47,7 @@ public class FeatureToggleService : IFeatureToggleService
 
         if (!_featureToggles.TryGetValue(name, out var toggle))
         {
-            _logger.LogWarning($"Feature toggle '{name}' not found");
+            _logger.LogWarning("Feature toggle '{Name}' not found", name);
             return null;
         }
 
@@ -58,11 +58,11 @@ public class FeatureToggleService : IFeatureToggleService
     {
         ArgumentNullException.ThrowIfNull(toggle);
 
-        _logger.LogDebug($"Adding feature toggle '{toggle}'");
+        _logger.LogDebug("Adding feature toggle '{Toggle}'", toggle);
 
         if (_featureToggles.TryGetValue(toggle.Name, out var _))
         {
-            _logger.LogWarning($"Feature toggle '{toggle.Name}' is already registered");
+            _logger.LogWarning("Feature toggle '{ToggleName}' is already registered", toggle.Name);
             return false;
         }
 
@@ -79,11 +79,11 @@ public class FeatureToggleService : IFeatureToggleService
     {
         ArgumentNullException.ThrowIfNull(toggle);
 
-        _logger.LogDebug($"Removing feature toggle '{toggle}'");
+        _logger.LogDebug("Removing feature toggle '{Toggle}'", toggle);
 
         if (!_featureToggles.Remove(toggle.Name))
         {
-            _logger.LogWarning($"Feature toggle '{toggle.Name}' is not registered");
+            _logger.LogWarning("Feature toggle '{ToggleName}' is not registered", toggle.Name);
             return false;
         }
 
@@ -124,7 +124,7 @@ public class FeatureToggleService : IFeatureToggleService
                 var toggle = GetToggle(toggleValue.Name);
                 if (toggle is not null)
                 {
-                    _logger.LogDebug($"  * {toggle.Name} => {toggleValue.Value}");
+                    _logger.LogDebug("  * {ToggleName} => {ToggleValue}", toggle.Name, toggleValue.Value);
 
                     toggle.Value = toggleValue.Value;
                     count++;
@@ -133,7 +133,7 @@ public class FeatureToggleService : IFeatureToggleService
 
             Loaded?.Invoke(this, EventArgs.Empty);
 
-            _logger.LogDebug($"Loaded '{count}' feature toggle values");
+            _logger.LogDebug("Loaded '{Count}' feature toggle values", count);
         }
         finally
         {
@@ -155,7 +155,7 @@ public class FeatureToggleService : IFeatureToggleService
 
         Saved?.Invoke(this, EventArgs.Empty);
 
-        _logger.LogDebug($"Saved '{_featureToggles.Count}' feature toggle values");
+        _logger.LogDebug("Saved '{Count}' feature toggle values", _featureToggles.Count);
     }
 
     private void Subscribe(FeatureToggle toggle)
@@ -170,7 +170,7 @@ public class FeatureToggleService : IFeatureToggleService
 
     private async void OnFeatureToggleToggled(object? sender, ToggledEventArgs e)
     {
-        _logger.LogInformation($"Feature toggle '{e.Toggle}' was toggled from '{e.OldValue}' => '{e.NewValue}'");
+        _logger.LogInformation("Feature toggle '{Toggle}' was toggled from '{OldValue}' => '{NewValue}'", e.Toggle, e.OldValue, e.NewValue);
 
         await SaveAsync();
 
