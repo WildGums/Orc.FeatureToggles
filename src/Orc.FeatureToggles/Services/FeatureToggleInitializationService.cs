@@ -36,11 +36,11 @@ public class FeatureToggleInitializationService : IFeatureToggleInitializationSe
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed to retrieve feature toggles from provider '{featureToggleProvider.GetType().Name}'");
+                _logger.LogError(ex, "Failed to retrieve feature toggles from provider '{ProviderName}'", featureToggleProvider.GetType().Name);
             }
         }
 
-        _logger.LogDebug($"Found '{toggles.Count}' feature toggles");
+        _logger.LogDebug("Found '{Count}' feature toggles", toggles.Count);
 
         return toggles.ToArray();
     }
