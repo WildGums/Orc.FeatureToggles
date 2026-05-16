@@ -7,6 +7,5 @@ public class SuperCoolFeatureToggle : FeatureToggle
     public SuperCoolFeatureToggle()
     {
         base.Name = Name;
-        Description = "When this feature toggle is enabled, it will show SUPER COOL FEATURE in the status bar";
     }
 }

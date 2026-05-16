@@ -1,7 +1,11 @@
-﻿namespace Orc.FeatureToggles;
+namespace Orc.FeatureToggles;
 
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
+using Catel.IoC;
+using Catel.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class IFeatureToggleServiceExtensions
 {
@@ -12,7 +16,12 @@ public static class IFeatureToggleServiceExtensions
         var toggle = service.GetToggle(name);
         if (toggle is null)
         {
-            throw new InvalidOperationException($"Could not find required toggle '{name}'");
+            var languageService = IoCContainer.ServiceProvider?.GetService<ILanguageService>();
+            var message = languageService is not null
+                ? languageService.GetRequiredStringAndFormat("Orc_FeatureToggles_IFeatureToggleServiceExtensions_RequiredToggleNotFound", name)
+                : string.Format(CultureInfo.CurrentCulture, "Could not find required toggle '{0}'", name);
+
+            throw new InvalidOperationException(message);
         }
 
         return toggle;

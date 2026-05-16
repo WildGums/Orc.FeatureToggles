@@ -49,6 +49,7 @@ public partial class App : Application
 
                 services.AddSingleton<IRibbonService, RibbonService>();
                 services.AddSingleton<IApplicationInitializationService, ApplicationInitializationService>();
+                services.AddSingleton<ILanguageSource>(new LanguageResourceSource("Orc.FeatureToggles.Example", "Orc.FeatureToggles.Example.Properties", "Resources"));
 
                 services.AddSingleton<IFeatureToggleProvider, ExampleFeatureToggleProvider>();
 

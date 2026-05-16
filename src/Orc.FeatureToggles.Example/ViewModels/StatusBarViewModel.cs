@@ -1,18 +1,22 @@
-﻿namespace Orc.FeatureToggles.Example.ViewModels;
+namespace Orc.FeatureToggles.Example.ViewModels;
 
 using System;
 using System.Threading.Tasks;
 using Catel.MVVM;
+using Catel.Services;
 using FeatureToggles;
 
 public class StatusBarViewModel : ViewModelBase
 {
     private readonly IFeatureToggleService _featureToggleService;
+    private readonly ILanguageService _languageService;
 
-    public StatusBarViewModel(IServiceProvider serviceProvider, IFeatureToggleService featureToggleService)
+    public StatusBarViewModel(IServiceProvider serviceProvider, IFeatureToggleService featureToggleService,
+        ILanguageService languageService)
         : base(serviceProvider)
     {
         _featureToggleService = featureToggleService;
+        _languageService = languageService;
     }
 
     public string Status { get; private set; }
@@ -43,11 +47,11 @@ public class StatusBarViewModel : ViewModelBase
 
     private void Update()
     {
-        var text = "Super cool feature NOT enabled";
+        var text = _languageService.GetRequiredString("Orc_FeatureToggles_Example_StatusBarViewModel_SuperCoolFeatureDisabled");
 
         if (_featureToggleService.GetValue(SuperCoolFeatureToggle.Name, false))
         {
-            text = "Super cool feature ENABLED";
+            text = _languageService.GetRequiredString("Orc_FeatureToggles_Example_StatusBarViewModel_SuperCoolFeatureEnabled");
         }
 
         Status = text;
