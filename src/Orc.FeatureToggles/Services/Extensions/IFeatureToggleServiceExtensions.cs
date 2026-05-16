@@ -1,4 +1,4 @@
-﻿namespace Orc.FeatureToggles;
+namespace Orc.FeatureToggles;
 
 using System;
 using System.Threading.Tasks;

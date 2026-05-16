@@ -7,10 +7,10 @@
                    xmlns:views="clr-namespace:Orc.FeatureToggles.Views;assembly=Orc.FeatureToggles.Xaml">
     <fluent:Ribbon>
         <fluent:Ribbon.Tabs>
-            <fluent:RibbonTabItem Header="Feature toggles">
-                <fluent:RibbonGroupBox Header="Feature toggles">
+            <fluent:RibbonTabItem Header="{catel:LanguageBinding Orc_FeatureToggles_Example_RibbonView_FeatureToggles}">
+                <fluent:RibbonGroupBox Header="{catel:LanguageBinding Orc_FeatureToggles_Example_RibbonView_FeatureToggles}">
 
-                    <fluent:Button Header="Manage"
+                    <fluent:Button Header="{catel:LanguageBinding Orc_FeatureToggles_Example_RibbonView_Manage}"
                                    Command="{Binding ManageFeatureToggles}"
                                    Size="Large" />
 
