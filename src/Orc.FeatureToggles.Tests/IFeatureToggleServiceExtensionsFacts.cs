@@ -1,9 +1,6 @@
 namespace Orc.FeatureToggles.Tests;
 
 using System;
-using Catel.IoC;
-using Catel.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
@@ -30,40 +27,14 @@ public class IFeatureToggleServiceExtensionsFacts
         }
 
         [TestCase]
-        public void Throws_Localized_Message_For_Missing_Name()
+        public void Throws_Default_Message_For_Missing_Name()
         {
             var service = CreateService();
-            var languageService = IoCContainer.ServiceProvider.GetRequiredService<ILanguageService>();
 
             var exception = Assert.Throws<InvalidOperationException>(() => service.GetRequiredToggle("missing"));
 
             Assert.That(exception, Is.Not.Null);
-            Assert.That(exception!.Message, Is.EqualTo(languageService.GetRequiredStringAndFormat(
-                "Orc_FeatureToggles_IFeatureToggleServiceExtensions_RequiredToggleNotFound",
-                "missing")));
-        }
-
-        [TestCase]
-        public void Falls_Back_To_Default_Message_When_Language_Service_Is_Unavailable()
-        {
-            var service = CreateService();
-            var originalServiceProvider = IoCContainer.ServiceProvider;
-
-            using var serviceProvider = new ServiceCollection().BuildServiceProvider();
-
-            IoCContainer.ServiceProvider = serviceProvider;
-
-            try
-            {
-                var exception = Assert.Throws<InvalidOperationException>(() => service.GetRequiredToggle("missing"));
-
-                Assert.That(exception, Is.Not.Null);
-                Assert.That(exception!.Message, Is.EqualTo("Could not find required toggle 'missing'"));
-            }
-            finally
-            {
-                IoCContainer.ServiceProvider = originalServiceProvider;
-            }
+            Assert.That(exception!.Message, Is.EqualTo("Could not find required toggle 'missing'"));
         }
     }
 
