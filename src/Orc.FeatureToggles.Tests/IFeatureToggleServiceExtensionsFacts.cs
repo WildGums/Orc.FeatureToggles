@@ -49,9 +49,7 @@ public class IFeatureToggleServiceExtensionsFacts
             var service = CreateService();
             var originalServiceProvider = IoCContainer.ServiceProvider;
 
-#pragma warning disable IDISP001
             using var serviceProvider = new ServiceCollection().BuildServiceProvider();
-#pragma warning restore IDISP001
 
             IoCContainer.ServiceProvider = serviceProvider;
 
