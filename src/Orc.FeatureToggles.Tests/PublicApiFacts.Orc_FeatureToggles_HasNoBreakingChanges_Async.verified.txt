@@ -50,7 +50,7 @@ namespace Orc.FeatureToggles
         public event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs>? Toggled;
         public bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
         public Orc.FeatureToggles.FeatureToggle? GetToggle(string name) { }
-        public Orc.FeatureToggles.FeatureToggle[] GetToggles() { }
+        public System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggle> GetToggles() { }
         public System.Threading.Tasks.Task InitializeAsync() { }
         public System.Threading.Tasks.Task LoadAsync() { }
         public bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
@@ -87,7 +87,7 @@ namespace Orc.FeatureToggles
         event System.EventHandler<Orc.FeatureToggles.ToggledEventArgs>? Toggled;
         bool AddToggle(Orc.FeatureToggles.FeatureToggle toggle);
         Orc.FeatureToggles.FeatureToggle? GetToggle(string name);
-        Orc.FeatureToggles.FeatureToggle[] GetToggles();
+        System.Collections.Generic.IReadOnlyList<Orc.FeatureToggles.FeatureToggle> GetToggles();
         System.Threading.Tasks.Task InitializeAsync();
         System.Threading.Tasks.Task LoadAsync();
         bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle);

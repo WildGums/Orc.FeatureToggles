@@ -36,7 +36,7 @@ public class FeatureToggleService : IFeatureToggleService
 
     public event EventHandler<ToggledEventArgs>? Toggled;
 
-    public FeatureToggle[] GetToggles()
+    public IReadOnlyList<FeatureToggle> GetToggles()
     {
         return _featureToggles.Values.ToArray();
     }

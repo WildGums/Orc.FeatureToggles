@@ -1,6 +1,7 @@
 ﻿namespace Orc.FeatureToggles;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public interface IFeatureToggleService
@@ -13,7 +14,7 @@ public interface IFeatureToggleService
 
     bool AddToggle(FeatureToggle toggle);
     FeatureToggle? GetToggle(string name);
-    FeatureToggle[] GetToggles();
+    IReadOnlyList<FeatureToggle> GetToggles();
     Task LoadAsync();
     bool RemoveToggle(FeatureToggle toggle);
     Task SaveAsync();
