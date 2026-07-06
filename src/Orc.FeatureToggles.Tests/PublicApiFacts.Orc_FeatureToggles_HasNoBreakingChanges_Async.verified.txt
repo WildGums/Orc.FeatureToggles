@@ -56,10 +56,8 @@ namespace Orc.FeatureToggles
         public bool RemoveToggle(Orc.FeatureToggles.FeatureToggle toggle) { }
         public System.Threading.Tasks.Task SaveAsync() { }
     }
-    public class FeatureToggleValue : Catel.Data.ModelBase
+    public class FeatureToggleValue
     {
-        public static readonly Catel.Data.IPropertyData NameProperty;
-        public static readonly Catel.Data.IPropertyData ValueProperty;
         public FeatureToggleValue() { }
         public FeatureToggleValue(Orc.FeatureToggles.FeatureToggle toggle) { }
         public string Name { get; set; }

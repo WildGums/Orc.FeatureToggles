@@ -1,9 +1,8 @@
 ﻿namespace Orc.FeatureToggles;
 
 using System;
-using Catel.Data;
 
-public class FeatureToggleValue : ModelBase
+public class FeatureToggleValue
 {
     public FeatureToggleValue()
     {
