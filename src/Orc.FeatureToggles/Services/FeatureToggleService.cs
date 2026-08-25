@@ -21,8 +21,6 @@ public class FeatureToggleService : IFeatureToggleService
         IFeatureToggleInitializationService featureToggleInitializationService,
         IFeatureToggleSerializationService featureToggleSerializationService)
     {
-        ArgumentNullException.ThrowIfNull(featureToggleInitializationService);
-        ArgumentNullException.ThrowIfNull(featureToggleSerializationService);
         _logger = logger;
         _featureToggleInitializationService = featureToggleInitializationService;
         _featureToggleSerializationService = featureToggleSerializationService;
