@@ -12,4 +12,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>Valor por defecto</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>Valor efectivo</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>El valor efectivo es el valor actual. Si el valor no está fijado, el valor efectivo será el valor por defecto.</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>Alternar funciones de gestión</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>Reinicio</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>Mostrar interruptores que contienen</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>Valor</value>
+  </data>
 </root>

@@ -12,4 +12,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>Standardwert</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>Effektiver Wert</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>Der effektive Wert ist entweder der aktuelle Wert. Ist der Wert nicht festgelegt, ist der effektive Wert der Standardwert.</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>Funktionsumschalter verwalten</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>Anzeigen-Umschalter, die enthalten</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>Toggle</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>Wert</value>
+  </data>
 </root>

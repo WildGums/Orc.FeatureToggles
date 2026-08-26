@@ -49,4 +49,50 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="fr" original="ORC.FEATURETOGGLES.XAML/PROPERTIES/RESOURCES.RESX">
+    <body>
+      <group id="ORC.FEATURETOGGLES.XAML/PROPERTIES/RESOURCES.RESX" datatype="resx">
+        <trans-unit id="FeatureToggles_DefaultValue" translate="yes" xml:space="preserve">
+          <source>Default value</source>
+          <target state="new">Valeur par défaut</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_Description" translate="yes" xml:space="preserve">
+          <source>Description</source>
+          <target state="new">Description</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_EffectiveValue" translate="yes" xml:space="preserve">
+          <source>Effective value</source>
+          <target state="new">Valeur effective</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_EffectiveValue_ToolTip" translate="yes" xml:space="preserve">
+          <source>The effective value is either the current value. If the value is not set, the effective value will be the default value.</source>
+          <target state="new">La valeur effective est soit la valeur actuelle. Si la valeur n’est pas fixée, la valeur effective sera la valeur par défaut.</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_ManageFeatureToggles" translate="yes" xml:space="preserve">
+          <source>Manage feature toggles</source>
+          <target state="new">Basculements de gestion des fonctions</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_Name" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <target state="new">Nom</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_Reset" translate="yes" xml:space="preserve">
+          <source>Reset</source>
+          <target state="new">Réinitialisation</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_ShowTogglesContaining" translate="yes" xml:space="preserve">
+          <source>Show toggles containing</source>
+          <target state="new">Afficher les bascules contenant</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_Toggle" translate="yes" xml:space="preserve">
+          <source>Toggle</source>
+          <target state="new">Bascule</target>
+        </trans-unit>
+        <trans-unit id="FeatureToggles_Value" translate="yes" xml:space="preserve">
+          <source>Value</source>
+          <target state="new">Valeur</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="nl" original="ORC.FEATURETOGGLES.EXAMPLE/PROPERTIES/RESOURCES.RESX">
+    <body>
+      <group id="ORC.FEATURETOGGLES.EXAMPLE/PROPERTIES/RESOURCES.RESX" datatype="resx">
+        <trans-unit id="Orc_FeatureToggles_Example_MainViewModel_Title" translate="yes" xml:space="preserve">
+          <source>Feature Toggles Test</source>
+          <target state="new">Feature Toggles Test</target>
+        </trans-unit>
+        <trans-unit id="Orc_FeatureToggles_Example_RibbonView_FeatureToggles" translate="yes" xml:space="preserve">
+          <source>Feature toggles</source>
+          <target state="new">Functieschakelaars</target>
+        </trans-unit>
+        <trans-unit id="Orc_FeatureToggles_Example_RibbonView_Manage" translate="yes" xml:space="preserve">
+          <source>Manage</source>
+          <target state="new">Beheren</target>
+        </trans-unit>
+        <trans-unit id="Orc_FeatureToggles_Example_StatusBarViewModel_SuperCoolFeatureDisabled" translate="yes" xml:space="preserve">
+          <source>Super cool feature NOT enabled</source>
+          <target state="new"></target>
+        </trans-unit>
+        <trans-unit id="Orc_FeatureToggles_Example_StatusBarViewModel_SuperCoolFeatureEnabled" translate="yes" xml:space="preserve">
+          <source>Super cool feature ENABLED</source>
+          <target state="new">Supercoole functie INGESCHAKELD</target>
+        </trans-unit>
+        <trans-unit id="Orc_FeatureToggles_Example_SuperCoolFeatureToggle_Description" translate="yes" xml:space="preserve">
+          <source>When this feature toggle is enabled, it will show SUPER COOL FEATURE in the status bar</source>
+          <target state="new">Wanneer deze functieschakelaar is ingeschakeld, verschijnt de SUPER COOLE FUNCTIE in de statusbalk</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

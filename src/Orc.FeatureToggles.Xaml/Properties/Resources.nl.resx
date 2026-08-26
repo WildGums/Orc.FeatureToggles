@@ -12,4 +12,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>Standaardwaarde</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>Beschrijving</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>Effectieve waarde</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>De effectieve waarde is ofwel de huidige waarde. Als de waarde niet is vastgesteld, zal de effectieve waarde de standaardwaarde zijn.</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>Beheer functie-schakelaars</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>Herstel</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>Toon schakelaars die bevatten</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>Omdraaien</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>Waarde</value>
+  </data>
 </root>

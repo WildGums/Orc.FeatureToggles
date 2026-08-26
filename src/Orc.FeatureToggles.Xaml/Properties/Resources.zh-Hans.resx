@@ -12,4 +12,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>有效价值</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>有效价值要么是当前值。如果该值未被设定，则有效值将成为默认值。</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>管理功能切换</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>显示开关包含</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>切换</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>价值</value>
+  </data>
 </root>

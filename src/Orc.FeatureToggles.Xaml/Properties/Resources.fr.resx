@@ -12,4 +12,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeatureToggles_DefaultValue" xml:space="preserve">
+    <value>Valeur par défaut</value>
+  </data>
+  <data name="FeatureToggles_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue" xml:space="preserve">
+    <value>Valeur effective</value>
+  </data>
+  <data name="FeatureToggles_EffectiveValue_ToolTip" xml:space="preserve">
+    <value>La valeur effective est soit la valeur actuelle. Si la valeur n’est pas fixée, la valeur effective sera la valeur par défaut.</value>
+  </data>
+  <data name="FeatureToggles_ManageFeatureToggles" xml:space="preserve">
+    <value>Basculements de gestion des fonctions</value>
+  </data>
+  <data name="FeatureToggles_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="FeatureToggles_Reset" xml:space="preserve">
+    <value>Réinitialisation</value>
+  </data>
+  <data name="FeatureToggles_ShowTogglesContaining" xml:space="preserve">
+    <value>Afficher les bascules contenant</value>
+  </data>
+  <data name="FeatureToggles_Toggle" xml:space="preserve">
+    <value>Bascule</value>
+  </data>
+  <data name="FeatureToggles_Value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
 </root>
